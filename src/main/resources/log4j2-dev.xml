@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	官网: https://logging.apache.org/log4j/2.x/manual/configuration.html
+	日志有 8个级别, 从低到高排序: All < Trace < Debug < Info < Warn < Error < Fatal < OFF.
+-->
+
+<!--
+	status 属性用于设置 log4j2 自身内部日志的信息输出级别, 默认是 OFF 级别.
+	monitorInterval 属性用于设置 '自动检测 log4j2 配置文件的变更'和 '重新配置 log4j2 配置文件本身' 的间隔秒数.
+-->
+<configuration status="ERROR"
+               monitorInterval="30">
+	<!--
+		%t：线程名称
+
+		%p：日志级别
+
+		%c：日志消息所在类名
+
+		%m：消息内容
+
+		%M：输出执行方法
+
+		%d：发生时间，%d{yyyy-MM-dd HH:mm:ss,SSS}，输出类似：2011-10-18 22:10:28,921
+
+		%x: 输出和当前线程相关联的NDC(嵌套诊断环境),尤其用到像java servlets这样的多客户多线程的应用中。
+
+		%L：代码中的行数
+
+		%n：换行
+	-->
+
+	<!-- 自定义常量, 在 log4j2 配置文件内部可以通过 ${常量名} 引用该常量 -->
+	<Properties>
+		<!-- 模块名称/APP名称 -->
+		<Property name="modelName">shiro_backend</Property>
+		<!-- 日志文件绝对路径前缀 -->
+		<Property name="logFileNamePrefix">D:/code/shiro/${modelName}/log/$${date:yyyy-MM-dd}/</Property>
+		<!-- 日志文件绝对路径后缀 -->
+		<Property name="logFileNameSuffix">.log</Property>
+		<Property name="allLogFileName">${modelName}_all_$${date:yyyy-MM-dd}</Property>
+		<Property name="errorLogFileName">${modelName}_error_$${date:yyyy-MM-dd}</Property>
+		<Property name="warnLogFileName">${modelName}_warn_$${date:yyyy-MM-dd}</Property>
+		<Property name="infoLogFileName">${modelName}_info_$${date:yyyy-MM-dd}</Property>
+		<!-- 日志输出格式 -->
+		<Property name="logFormat">%date{yyyy-MM-dd HH:mm:ss.SSS} [%p] - %t [%X{TraceId}] - %l- :%m%n</Property>
+	</Properties>
+
+	<!-- appenders 节点用于定义输出内容、输出格式、输出⽅式、⽇志保存策略等, 常⽤其下三种标签 [Console,File,RollingFile] -->
+	<appenders>
+		<!--
+			Console 节点用于定义输出到控制台的 Appender.
+			name 属性: Appender 名称.
+		-->
+		<Console name="Console"
+		         target="SYSTEM_OUT">
+			<!-- PatternLayout 节点用于配置输出日志行文格式 -->
+			<PatternLayout pattern="${modelName}：${logFormat}"/>
+		</Console>
+
+		<!--
+			File 节点用于定义输出到指定位置的文件的 Appender.
+			name 属性: Appender 名称.
+			fileName 属性: 输出日志文件的名称(带全路径).
+			append 属性等于 false, 会根据其下日志策略清空日志文件并重新输入日志, 常用于测试
+		-->
+		<File name="AllFile"
+		      fileName="${logFileNamePrefix}all/${allLogFileName}${logFileNameSuffix}"
+		      append="false">
+			<PatternLayout pattern="${logFormat}"/>
+		</File>
+
+		<!--
+			RollingFile 节点用于定义指定方式触发新的 Appender.
+			name 属性: Appender名称.
+			fileName 属性: 输出日志文件的名称(带全路径).
+			filePattern 属性: 归档日志文件的文件名模式.
+			同一来源的 Appender 可以定义多个 RollingFile(name 属性值一致).
+		-->
+		<RollingFile name="RollingErrorFile"
+		             fileName="${logFileNamePrefix}error/${errorLogFileName}${logFileNameSuffix}"
+		             filePattern="D:/code/shiro/${modelName}/log/$${date:yyyy-MM}/dox/error/error.log.%date{yyyy-MM-dd}.gz">
+			<!--
+				ThresholdFilter 节点用于配置日志输出过滤.
+				level="DEBUG": 日志级别是 DEBUG 级别.
+				onMatch="ACCEPT": 日志是 level 级别或在 level 级别之上则接受.
+				onMismatch="DENY": 日志在level级别之下则拒绝.
+			-->
+			<ThresholdFilter level="ERROR"
+			                 onMatch="ACCEPT"
+			                 onMismatch="DENY"/>
+			<PatternLayout pattern="${logFormat}"/>
+			<!-- Policies 节点用于配置⽇志滚动策略 -->
+			<Policies>
+				<!--
+					TimeBasedTriggeringPolicy 节点用于配置基于时间的滚动策略.
+					interval属性: 自定义文件滚动时间间隔, 每隔 X 小时产生新文件.
+					modulate属性: 产生的新文件是否以 0 点开始偏移时间, 即 0+interval属性值、0+interval属性值、0+interval属性值、0(即6点、12点、18点、0点).
+				-->
+				<TimeBasedTriggeringPolicy interval="6"
+				                           modulate="true"/>
+				<!--
+					SizeBasedTriggeringPolicy 节点用于配置基于文件大小的滚动策略.
+					size 属性: 定义每个日志文件的大小, 单位后缀(KB、MB、GB)可以指定.
+                 -->
+				<SizeBasedTriggeringPolicy size="1 MB"/>
+			</Policies>
+			<!-- DefaultRolloverStrategy 节点用于指定指定同一文件夹最多(默认是7个)有几个日志文件时开始删除最旧的, 然后创建新的(通过 max 属性) -->
+			<DefaultRolloverStrategy max="20"/>
+		</RollingFile>
+		
+		<RollingFile name="RollingWarnFile"
+		             fileName="${logFileNamePrefix}warn/${warnLogFileName}${logFileNameSuffix}"
+		             filePattern="D:/code/shiro/${modelName}/$${date:yyyy-MM}/dox/warn/warn.log.%date{yyyy-MM-dd}.gz">
+			<ThresholdFilter level="WARN"
+			                 onMatch="ACCEPT"
+			                 onMismatch="DENY"/>
+			<PatternLayout pattern="${logFormat}"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="6"
+				                           modulate="true"/>
+				<SizeBasedTriggeringPolicy size="1 MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="20"/>
+		</RollingFile>
+		
+		<RollingFile name="RollingInfoFile"
+		             fileName="${logFileNamePrefix}info/${infoLogFileName}${logFileNameSuffix}"
+		             filePattern="D:/code/shiro/${modelName}/log/$${date:yyyy-MM}/dox/info/info.log.%date{yyyy-MM-dd}.gz">
+			<ThresholdFilter level="INFO"
+			                 onMatch="ACCEPT"
+			                 onMismatch="DENY"/>
+			<PatternLayout pattern="${logFormat}"/>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="6"
+				                           modulate="true"/>
+				<SizeBasedTriggeringPolicy size="1 MB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="20"/>
+		</RollingFile>
+	</appenders>
+
+	<!--
+		Loggers 节点用于定义 Logger 并引入Appender, Appender 只有被引入到 Logger才会生效.
+		Loggers 有两种常见的子节点: root、logger.
+	-->
+	<loggers>
+		<!--
+			root 节点用于指定项目的根日志, 如果没有单独指定 logger,
+			那么就会默认使用该 root 节点的 appender-ref 子节点引入的 appender 来记录日志.
+		-->
+		<root level="INFO">
+			<!-- appender-ref 节点用于指定日志输出到哪个 Appender上(ref 属性值) -->
+			<appender-ref ref="Console"/>
+			<appender-ref ref="AllFile"/>
+			<appender-ref ref="RollingErrorFile"/>
+			<appender-ref ref="RollingInfoFile"/>
+			<appender-ref ref="RollingWarnFile"/>
+			<appender-ref ref="Kafka"/>
+		</root>
+
+		<!--
+			logger 节点用于单独指定日志的形式, 比如要为指定包下的 Class 指定不同的日志级别等.
+			name 属性：用于指定该 logger 所适用的类或者类所在的包全路径, 继承自root节点.
+			level 属性: 日志输出级别.
+		-->
+		<logger name="Kafka" additivity="false" level="DEBUG">
+			<!--
+				logger 节点下的 appender-ref 节点用于指定日志输出到哪个 Appender, 如果没有指定, 就会默认继承自 root.
+				如果指定了 Appender, 那么会在指定的这个 Appender 和 root 节点下的 appender-ref 节点引入的 Appender 中都会输出日志.
+				如果想只在指定的这个 Appender 中进行输出(避免重复打印日志、浪费磁盘空间, 请务必设置 logger 节点的 additivity 属性为 false),
+				可以通过设置 logger 节点的 additivity 属性为 false 即可.
+			-->
+			<appender-ref ref="Console"/>
+			<appender-ref ref="Kafka"/>
+		</logger>
+		<logger name="indi.ly.crush.repository"
+		        level="trace"/>
+		<!-- 指定 spring 和 mybatis 的日志级别为INFO, 从而过滤掉它们的一些无用的 DEBUG 信息 -->
+		<logger name="org.springframework"
+		        level="INFO"/>
+		<logger name="org.mybatis"
+		        level="INFO"/>
+
+		<!--
+			AsyncLogger 节点用于配置异步日志.
+			log4j / log4j2 中有三种日志模式: 同步日志、混合模式、全异步日志, 性能从低到高; 线程越多, 则效率越高, 也可以避免日志卡死线程情况发生!
+			name 属性: 用于指定该 logger 所适用的类或者类所在的包全路径, 继承自 root 节点.
+			level 属性: 日志输出级别.
+        -->
+		<AsyncLogger name="AsyncLogger"
+		             level="trace"
+		             includeLocation="true"
+		             additivity="true">
+			<!--
+				AsyncLogger 节点下的 appender-ref 节点用于指定日志输出到哪个 Appender, 如果没有指定, 就会默认继承自 root.
+				如果指定了 Appender, 那么会在指定的这个 Appender 和 root 节点下的 appender-ref 节点引入的 Appender 中都会输出日志.
+				如果想只在指定的这个 Appender 中进行输出(避免重复打印日志、浪费磁盘空间, 请务必设置 AsyncLogger 节点的 additivity 属性为 false),
+				可以通过设置 AsyncLogger 节点的 additivity 属性为 false 即可.
+			-->
+			<appender-ref ref="Console"/>
+		</AsyncLogger>
+	</loggers>
+</configuration>

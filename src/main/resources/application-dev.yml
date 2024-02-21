@@ -1,0 +1,20 @@
+server:
+  port: 80
+
+logging:
+  config: classpath:log4j2-dev.xml
+  level:
+    indi.ly.crush: trace
+#    root: debug
+
+spring:
+  application:
+    name: universal_tools
+  web:
+    resources:
+      static-locations: >
+                          classpath:/MY-RESOURCES/,
+                          classpath:/META-INF/resources/,
+                          classpath:/resources/,
+                          classpath:/static/,
+                          classpath:/public/
