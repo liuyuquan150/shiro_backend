@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "/api/")
-public class LoginController {
+public class UserController {
 
     private final IUserService userServiceImpl;
 
-    public LoginController(IUserService userServiceImpl) {
+    public UserController(IUserService userServiceImpl) {
         this.userServiceImpl = userServiceImpl;
     }
 
