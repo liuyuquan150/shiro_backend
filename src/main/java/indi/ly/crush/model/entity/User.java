@@ -42,6 +42,16 @@ public class User
 	 */
 	@Column(nullable = false, length = 64)
 	private String password;
+	/**
+	 * <p>
+	 *     盐. <br /> <br />
+	 *
+	 *     在哈希{@link #password 密码}之前向{@link #password 密码}添加一个随机值(<em>即盐</em>),
+	 *     这样做可以大大增加破解存储的密码的难度, 因为即使两个用户具有相同的密码, 它们的哈希值也会因为盐的不同而不同.
+	 * </p>
+	 */
+	@Column(nullable = false, length = 64)
+	private String salt;
 	@Column(columnDefinition = "TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '性别：0-女  1-男 2-私密'")
 	@Enumerated(value = EnumType.ORDINAL)
 	private Gender gender;
@@ -86,6 +96,12 @@ public class User
 	@Column(nullable = false)
 	private LocalDateTime lastLoginTime;
 
+	public User() {}
+
+	public User(String username) {
+		this.username = username;
+	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -102,14 +118,6 @@ public class User
 		this.nickname = nickname;
 	}
 
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -118,12 +126,28 @@ public class User
 		this.password = password;
 	}
 
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
 	public Gender getGender() {
 		return gender;
 	}
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 	public Boolean getLocked() {
