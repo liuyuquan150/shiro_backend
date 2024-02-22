@@ -44,7 +44,7 @@ public class IUserServiceImpl
 
         Optional<User> userOptional = this.userRepositoryImpl.findOne(Example.of(user));
         if (userOptional.isPresent()) {
-            throw new RuntimeException("册失败, 用户名已占用.");
+            throw new RuntimeException("注册失败, 用户名已占用.");
         }
 
         String salt = PasswordEncryption.generateSalt();
