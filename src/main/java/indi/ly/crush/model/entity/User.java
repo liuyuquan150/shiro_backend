@@ -30,13 +30,6 @@ public class User
 	private String username;
 	/**
 	 * <p>
-	 *     昵称.
-	 * </p>
-	 */
-	@Column(nullable = false, length = 64)
-	private String nickname;
-	/**
-	 * <p>
 	 *     用户密码.
 	 * </p>
 	 */
@@ -86,14 +79,14 @@ public class User
 	 *     最后登录 IP.
 	 * </p>
 	 */
-	@Column(nullable = false, length = 64)
+	@Column(length = 64)
 	private String lastLoginIp;
 	/**
 	 * <p>
 	 *     最后登录时间.
 	 * </p>
 	 */
-	@Column(nullable = false)
+	@Column
 	private LocalDateTime lastLoginTime;
 
 	public User() {}
@@ -108,14 +101,6 @@ public class User
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
 	}
 
 	public String getPassword() {
