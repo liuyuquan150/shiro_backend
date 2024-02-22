@@ -15,6 +15,16 @@ import lombok.NonNull;
 public interface IUserService {
     /**
      * <p>
+     *     注册新用户. <br /> <br />
+     *
+     *     请你注意, 在用户注册时需使用加密密码.
+     * </p>
+     *
+     * @param userRegistration 包含注册信息的的实例.
+     */
+    void regist(@NonNull UserRegistration userRegistration);
+    /**
+     * <p>
      *     用户登录操作. <br /> <br />
      *
      *     该方法接受用户凭证作为参数, 进行身份认证. <br />
