@@ -8,6 +8,7 @@ import indi.ly.crush.response.ResponseResult;
 import indi.ly.crush.service.IUserService;
 import indi.ly.crush.util.support.BaseSpringBeanUtil;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,13 +30,13 @@ public class UserController {
     }
 
     @PostMapping(value = "/v1/users")
-    public ResponseResult<?> goToRegister(UserRegistration userRegistration) {
+    public ResponseResult<?> goToRegister(@RequestBody UserRegistration userRegistration) {
        this.userServiceImpl.regist(userRegistration);
         return ResponseResult.ok("注册成功");
     }
 
     @PostMapping(value = "/v1/login")
-    public ResponseResult<UserDTO> goToLogin(UserCredentials userCredentials) {
+    public ResponseResult<UserDTO> goToLogin(@RequestBody UserCredentials userCredentials) {
         User user = this.userServiceImpl.login(userCredentials);
         UserDTO userDTO = BaseSpringBeanUtil.shallowCopyObject(user, new UserDTO(), null, null);
         return ResponseResult.ok(userDTO).message("登录成功");
