@@ -45,9 +45,9 @@ public class User
 	 */
 	@Column(nullable = false, length = 64)
 	private String salt;
-	@Column(columnDefinition = "TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '性别：0-女  1-男 2-私密'")
+	@Column(columnDefinition = "TINYINT(1) UNSIGNED NOT NULL COMMENT '性别：0-女  1-男 2-私密'")
 	@Enumerated(value = EnumType.ORDINAL)
-	private Gender gender;
+	private Gender gender = Gender.UNKNOWN;
 	/**
 	 * <p>
 	 *     角色.
@@ -65,15 +65,15 @@ public class User
 	 *     是否锁定: 0-否 1-是.
 	 * </p>
 	 */
-	@Column(columnDefinition = "TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否锁定: 0-否 1-是'")
-	private Boolean locked;
+	@Column(columnDefinition = "TINYINT(1) UNSIGNED NOT NULL COMMENT '是否锁定: 0-否 1-是'")
+	private Boolean locked = false;
 	/**
 	 * <p>
 	 *     是否可用: 0-否 1-是.
 	 * </p>
 	 */
-	@Column(columnDefinition = "TINYINT(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '是否可用: 0-否 1-是'")
-	private Boolean enabled;
+	@Column(columnDefinition = "TINYINT(1) UNSIGNED NOT NULL COMMENT '是否可用: 0-否 1-是'")
+	private Boolean enabled = true;
 	/**
 	 * <p>
 	 *     最后登录 IP.
