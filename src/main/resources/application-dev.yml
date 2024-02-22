@@ -18,3 +18,18 @@ spring:
                           classpath:/resources/,
                           classpath:/static/,
                           classpath:/public/
+  datasource:
+    username: root
+    password: crush
+    url: >
+            jdbc:mysql://localhost:3306/shiro_backend?
+            useSSL=true&
+            useUnicode=true&
+            characterEncoding=UTF-8&
+            useTimezone=true&
+            serverTimezone=GMT%2B8&
+            allowMultiQueries=true&
+            rewriteBatchedStatements=true
+  jpa:
+    # 是否在启动时初始化数据库表.
+    generate-ddl: true
