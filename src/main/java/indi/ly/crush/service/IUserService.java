@@ -2,6 +2,7 @@ package indi.ly.crush.service;
 
 import indi.ly.crush.model.entity.User;
 import indi.ly.crush.model.from.UserCredentials;
+import indi.ly.crush.model.from.UserRegistration;
 import lombok.NonNull;
 
 /**
@@ -17,10 +18,13 @@ public interface IUserService {
      *     用户登录操作. <br /> <br />
      *
      *     该方法接受用户凭证作为参数, 进行身份认证. <br />
-     *     如果认证成功, 返回一个包含用户信息的 {@link User} 对象.
+     *     如果认证成功, 返回一个包含用户信息的 {@link User} 对象. <br /> <br />
+     *
+     *     请你注意,
+     *     用户登录进行密码验证时所使用到的算法和盐值、以及散列次数要与用户注册时所使用到的算法和盐值、以及散列次数保持一致.
      * </p>
      *
-     * @param userCredentials 包含用户登录信息的用户凭证.
+     * @param userCredentials 包含用户登录信息的实例.
      * @return 一个 {@link User} 对象, 包含用户的详细信息.
      */
     @NonNull User login(@NonNull UserCredentials userCredentials);
