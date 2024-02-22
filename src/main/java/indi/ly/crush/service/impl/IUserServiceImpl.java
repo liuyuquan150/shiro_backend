@@ -7,7 +7,6 @@ import indi.ly.crush.model.from.UserRegistration;
 import indi.ly.crush.realm.UserRealm;
 import indi.ly.crush.repository.IUserRepository;
 import indi.ly.crush.service.IUserService;
-import indi.ly.crush.util.support.BaseSpringBeanUtil;
 import lombok.NonNull;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -40,7 +39,7 @@ public class IUserServiceImpl
 
     @Override
     public void regist(@NonNull UserRegistration userRegistration) {
-        User user = BaseSpringBeanUtil.shallowCopyObject(userRegistration, new User(), null, null);
+        User user = new User(userRegistration.getUsername());
 
         Optional<User> userOptional = this.userRepositoryImpl.findOne(Example.of(user));
         if (userOptional.isPresent()) {
