@@ -11,6 +11,7 @@ import org.apache.tomcat.util.net.openssl.ciphers.MessageDigest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +60,7 @@ public class ShiroConfig {
         shiroFilter.setSecurityManager(defaultWebSecurityManager);
 
         /* 自定义过滤器设置 */
-        Map<String, javax.servlet.Filter> filters = new LinkedHashMap<>();
+        Map<String, Filter> filters = new LinkedHashMap<>();
         // 使用自定义的 AuthenticationFilter 替换默认的 authc 过滤器.
         filters.put(AUTHC, new AjaxAuthenticationFilter());
         shiroFilter.setFilters(filters);
