@@ -6,7 +6,7 @@ import indi.ly.crush.model.from.UserCredentials;
 import indi.ly.crush.response.ResponseResult;
 import indi.ly.crush.service.IUserService;
 import indi.ly.crush.util.support.BaseSpringBeanUtil;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +27,7 @@ public class LoginController {
         this.userServiceImpl = userServiceImpl;
     }
 
-    @GetMapping(value = "/v1/login")
+    @PostMapping(value = "/v1/login")
     public ResponseResult<UserDTO> goToLogin(UserCredentials userCredentials) {
         User user = this.userServiceImpl.login(userCredentials);
         UserDTO userDTO = BaseSpringBeanUtil.shallowCopyObject(user, new UserDTO(), null, null);

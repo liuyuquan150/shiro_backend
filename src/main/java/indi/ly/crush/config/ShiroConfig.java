@@ -7,6 +7,7 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.tomcat.util.net.openssl.ciphers.MessageDigest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,9 +31,9 @@ public class ShiroConfig {
     public HashedCredentialsMatcher createHashedCredentialsMatcherBean() {
         HashedCredentialsMatcher h = new HashedCredentialsMatcher();
         // 指定加密方法为 md5.
-        h.setHashAlgorithmName("md5");
+        h.setHashAlgorithmName(MessageDigest.MD5.name());
         // 指定哈希算法的散列(循环)次数.
-        h.setHashIterations(3);
+        h.setHashIterations(1024);
         return h;
     }
 
