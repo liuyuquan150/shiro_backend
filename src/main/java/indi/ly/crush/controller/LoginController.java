@@ -3,6 +3,7 @@ package indi.ly.crush.controller;
 import indi.ly.crush.model.dto.UserDTO;
 import indi.ly.crush.model.entity.User;
 import indi.ly.crush.model.from.UserCredentials;
+import indi.ly.crush.model.from.UserRegistration;
 import indi.ly.crush.response.ResponseResult;
 import indi.ly.crush.service.IUserService;
 import indi.ly.crush.util.support.BaseSpringBeanUtil;
@@ -25,6 +26,12 @@ public class LoginController {
 
     public LoginController(IUserService userServiceImpl) {
         this.userServiceImpl = userServiceImpl;
+    }
+
+    @PostMapping(value = "/v1/users")
+    public ResponseResult<?> goToRegister(UserRegistration userRegistration) {
+       this.userServiceImpl.regist(userRegistration);
+        return ResponseResult.ok("注册成功");
     }
 
     @PostMapping(value = "/v1/login")
