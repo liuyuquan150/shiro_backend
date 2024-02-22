@@ -1,5 +1,7 @@
 package indi.ly.crush.model.from;
 
+import indi.ly.crush.model.entity.User;
+
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -14,8 +16,19 @@ public class UserCredentials
         implements Serializable {
     @Serial
     private static final long serialVersionUID = -6849794470754667710L;
+    /**
+     * @see User#getUsername() User#username
+     */
     private String username;
+    /**
+     * @see User#getPassword() User#password
+     */
     private String password;
+    /**
+     * <p>
+     *     记住我.
+     * </p>
+     */
     private boolean rememberMe;
 
     public String getUsername() {
