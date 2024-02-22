@@ -66,6 +66,7 @@ public class ShiroConfig {
 
         /* 过滤器链定义(Filter Chain Definitions)是用来指定哪些资源是受保护的以及它们受到哪种类型的安全策略保护. */
         Map<String, String> filterChain = new LinkedHashMap<>(5);
+        filterChain.put("/api/v1/users", "anon"); // 注册 API.
         filterChain.put("/api/v1/login", "anon"); // 登录 API.
         filterChain.put("/api/v1/logout", "logout"); // 登出 API
         filterChain.put("/api/v1/guest/**", "anon");  // 游客.
