@@ -15,7 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static indi.ly.crush.constants.ShiroSecurityPolicyKeywordConstants.AUTHC;
+import static indi.ly.crush.constants.ShiroSecurityPolicyKeywordConstants.*;
 
 /**
  * <h2>Shiro 配置</h2>
@@ -66,10 +66,10 @@ public class ShiroConfig {
 
         /* 过滤器链定义(Filter Chain Definitions)是用来指定哪些资源是受保护的以及它们受到哪种类型的安全策略保护. */
         Map<String, String> filterChain = new LinkedHashMap<>(5);
-        filterChain.put("/api/v1/users", "anon"); // 注册 API.
-        filterChain.put("/api/v1/login", "anon"); // 登录 API.
-        filterChain.put("/api/v1/logout", "logout"); // 登出 API
-        filterChain.put("/api/v1/guest/**", "anon");  // 游客.
+        filterChain.put("/api/v1/users", ANON); // 注册 API.
+        filterChain.put("/api/v1/login", ANON); // 登录 API.
+        filterChain.put("/api/v1/logout", LOGOUT); // 登出 API
+        filterChain.put("/api/v1/guest/**", ANON);  // 游客.
         filterChain.put("/api/v1/**", AUTHC); // 配置所有 /api/** 路径下的请求都需要通过自定义的 authc 过滤器(即 AuthenticationFilter). 其它API需要认证(登录)后访问.
         shiroFilter.setFilterChainDefinitionMap(filterChain);
 
