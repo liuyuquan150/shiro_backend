@@ -1,6 +1,7 @@
 package indi.ly.crush.service.impl;
 
 import indi.ly.crush.encryp.PasswordEncryption;
+import indi.ly.crush.enums.Role;
 import indi.ly.crush.ex.RegistrationFailedException;
 import indi.ly.crush.model.entity.User;
 import indi.ly.crush.model.from.UserCredentials;
@@ -72,8 +73,8 @@ public class IUserServiceImpl
         user.setPassword(newPassword); // 保存加密之后的密码到用户记录中.
 
         this.transactionTemplate.execute(status -> {
-            long userId = this.userRepositoryImpl.saveAndFlush(user).getId();   // 添加用户.
-            this.roleRepositoryImpl.assignRoleToUser(userId, 1L);               // 为用户分配角色.
+            long userId = this.userRepositoryImpl.saveAndFlush(user).getId();                           // 添加用户.
+            this.roleRepositoryImpl.assignRoleToUser(userId, (long) Role.USER.ordinal());               // 为用户分配角色.
             return null;
         });
     }
