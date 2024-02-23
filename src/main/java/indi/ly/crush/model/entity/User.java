@@ -103,7 +103,7 @@ public class User
 	 *     角色.
 	 * </p>
 	 */
-	@ManyToMany(fetch = FetchType.LAZY)	// 指定具有多对多多重性的多值关联.
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)	// 指定具有多对多多重性的多值关联.
 	@JoinTable(
 			name = "t_user_role",
 			joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
