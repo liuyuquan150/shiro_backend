@@ -100,7 +100,7 @@ public class User
 	private Gender gender = Gender.UNKNOWN;
 	/**
 	 * <p>
-	 *     角色.
+	 *     用户拥有的所有角色.
 	 * </p>
 	 */
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)	// 指定具有多对多多重性的多值关联.
