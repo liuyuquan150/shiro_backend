@@ -1,6 +1,7 @@
 package indi.ly.crush.service.impl;
 
 import indi.ly.crush.encryp.PasswordEncryption;
+import indi.ly.crush.ex.RegistrationFailedException;
 import indi.ly.crush.model.entity.User;
 import indi.ly.crush.model.from.UserCredentials;
 import indi.ly.crush.model.from.UserRegistration;
@@ -58,7 +59,7 @@ public class IUserServiceImpl
 
         Optional<User> userOptional = this.userRepositoryImpl.findOne(Example.of(user));
         if (userOptional.isPresent()) {
-            throw new RuntimeException("注册失败, 用户名已占用.");
+            throw new RegistrationFailedException("注册失败, 用户名已占用.");
         }
 
         String salt = PasswordEncryption.generateSalt();
