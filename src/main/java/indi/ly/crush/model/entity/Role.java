@@ -52,11 +52,11 @@ import java.util.List;
  * <h2 style="color: white;">权限表(t_permission)</h2>
  * <table style="border-collapse: collapse; width: 100%;">
  *     <tr>
- *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">id</th>
- *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">pid</th>
+ *         <th style="width: 50px; border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">id</th>
+ *         <th style="width: 50px; border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">pid</th>
  *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">url</th>
  *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">name</th>
- *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">type</th>
+ *         <th style="width: 50px; border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">type</th>
  *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">description</th>
  *     </tr>
  *     <tr>
