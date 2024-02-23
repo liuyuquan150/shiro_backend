@@ -106,8 +106,8 @@ public class User
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)	// 指定具有多对多多重性的多值关联.
 	@JoinTable(
 			name = "t_user_role",
-			joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-			inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
+			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
 	)
 	private List<Role> roles;
 	/**
