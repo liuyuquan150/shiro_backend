@@ -10,9 +10,12 @@ import indi.ly.crush.service.IUserService;
 import lombok.NonNull;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +32,7 @@ import java.util.Optional;
 @Service
 public class IUserServiceImpl
         implements IUserService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(IUserServiceImpl.class);
     private final IUserRepository userRepositoryImpl;
     private final HashedCredentialsMatcher hashedCredentialsMatcher;
 
@@ -62,12 +66,20 @@ public class IUserServiceImpl
     public @NonNull User login(@NonNull UserCredentials userCredentials) {
         UsernamePasswordToken token = new UsernamePasswordToken(userCredentials.getUsername(), userCredentials.getPassword(), userCredentials.isRememberMe());
         Subject subject = SecurityUtils.getSubject();
-        /*
-            当调用 Subject.login() 进行登录时, Shiro 会使用配置的 Realm 执行认证逻辑.
-            如果认证成功, Realm 会返回一个 AuthenticationInfo 实例, 其中包含了 Principal 和其它认证信息.
-            Principal 通常是用户的标识信息, 如用户名或用户对象, 具体取决于 Realm 的实现.
-         */
-        subject.login(token);
+        try {
+            /*
+                当调用 Subject.login() 进行登录时, Shiro 会使用配置的 Realm 执行认证逻辑.
+                如果认证成功, Realm 会返回一个 AuthenticationInfo 实例, 其中包含了 Principal 和其它认证信息.
+                Principal 通常是用户的标识信息, 如用户名或用户对象, 具体取决于 Realm 的实现.
+             */
+            subject.login(token);
+        } catch (IncorrectCredentialsException e) {     // 密码不一致.
+            LOGGER.error("{} =======> {}", e.getClass(), e.getMessage());
+            throw new IncorrectCredentialsException("密码错误, 登录失败.");
+        }
+
+        LOGGER.info("用户 [{}] 认证成功.", token.getUsername());
+
         // 确保 Realm doGetAuthenticationInfo 方法返回的是 User 类型.
         return (User) subject.getPrincipal();
     }
