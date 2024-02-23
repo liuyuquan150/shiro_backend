@@ -23,7 +23,9 @@ import org.springframework.lang.NonNull;
  *
  *     这样, {@code Spring Boot} 的自动配置机制会负责创建和初始化 {@link SecurityManager}, 并将其注入到应用中需要的地方. <br />
  *     这个过程无需手动调用 {@link SecurityUtils#setSecurityManager(SecurityManager)} 方法,
- *     因为 {@code Spring} 的依赖注入机制会自动处理(<em>关于 {@link SubjectThreadState#bind()} 方法的执行时机</em>).
+ *     因为 {@code Spring} 的依赖注入机制会自动处理(<em>关于 {@link SubjectThreadState#bind()} 方法的执行时机</em>). <br /> <br />
+ *
+ *     只有绑定了{@link SecurityManager 安全管理器}, 之后才可以通过 {@link SecurityUtils#getSubject()} 方法创建 {@link Subject} 实例.
  * </p>
  *
  * @since 1.0

@@ -76,7 +76,7 @@ public class UserRealm
 
         LOGGER.info("用户 [{}] 认证成功.", username);
 
-        // Shiro 会自动验证密码是否匹配.
+        // Shiro 会自动验证密码是否匹配, 若不匹配会抛出 IncorrectCredentialsException 异常.
         return new SimpleAuthenticationInfo(
                 user,
                 user.getPassword(), // 数据库中的加密密码.
