@@ -1,5 +1,7 @@
 package indi.ly.crush.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * <h2>性别</h2>
  *
@@ -13,17 +15,28 @@ public enum Gender {
 	 *     性别之一: 女.
 	 * </p>
 	 */
-	FEMALE,
+	FEMALE("女"),
 	/**
 	 * <p>
 	 *     性别之一: 男.
 	 * </p>
 	 */
-	MALE,
+	MALE("男"),
 	/**
 	 * <p>
 	 *     性别之一: 私密.
 	 * </p>
 	 */
-	UNKNOWN
+	UNKNOWN("私密");
+
+	private final String description;
+
+	Gender(String description) {
+		this.description = description;
+	}
+
+	@JsonValue
+	public String getDescription() {
+		return description;
+	}
 }
