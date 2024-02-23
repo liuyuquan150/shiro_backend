@@ -11,5 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @formatter:off
  */
 public interface IRoleRepository
-		extends JpaRepository<Role, String> {
+		extends JpaRepository<Role, Long> {
 }
