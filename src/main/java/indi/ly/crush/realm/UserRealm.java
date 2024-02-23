@@ -74,8 +74,6 @@ public class UserRealm
             throw new AuthenticationException("用户认证信息不完整.");
         }
 
-        LOGGER.info("用户 [{}] 认证成功.", username);
-
         // Shiro 会自动验证密码是否匹配, 若不匹配会抛出 IncorrectCredentialsException 异常.
         return new SimpleAuthenticationInfo(
                 user,
