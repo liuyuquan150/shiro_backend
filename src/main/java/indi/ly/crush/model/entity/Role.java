@@ -2,10 +2,9 @@ package indi.ly.crush.model.entity;
 
 import indi.ly.crush.domain.AbstractJpaExpansionEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serial;
+import java.util.List;
 
 /**
  * <h2>角色</h2>
@@ -47,6 +46,18 @@ public class Role
 	 */
 	@Column(nullable = false, length = 128)
 	private String name;
+	/**
+	 * <p>
+	 *     角色对应的所有权限.
+	 * </p>
+	 */
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(
+			name = "t_role_permissions",
+			joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "permissions_id", referencedColumnName = "id")
+	)
+	private List<Permission> permissions;
 
 	public Role() {
 	}
@@ -61,5 +72,13 @@ public class Role
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Permission> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
 	}
 }
