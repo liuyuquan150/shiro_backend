@@ -15,14 +15,14 @@ import lombok.NonNull;
 public interface IUserService {
     /**
      * <p>
-     *     注册新用户. <br /> <br />
+     *     注册用户并分配默认角色. <br /> <br />
      *
      *     请你注意, 在用户注册时需使用加密密码.
      * </p>
      *
      * @param userRegistration 包含注册信息的的实例.
      */
-    void register(@NonNull UserRegistration userRegistration);
+    void registerUserAndAssignDefaultRole(@NonNull UserRegistration userRegistration);
     /**
      * <p>
      *     用户登录操作. <br /> <br />

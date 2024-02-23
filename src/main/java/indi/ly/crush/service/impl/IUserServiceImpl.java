@@ -5,6 +5,7 @@ import indi.ly.crush.model.entity.User;
 import indi.ly.crush.model.from.UserCredentials;
 import indi.ly.crush.model.from.UserRegistration;
 import indi.ly.crush.realm.UserRealm;
+import indi.ly.crush.repository.IRoleRepository;
 import indi.ly.crush.repository.IUserRepository;
 import indi.ly.crush.service.IUserService;
 import lombok.NonNull;
@@ -18,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.Optional;
 
@@ -34,15 +36,24 @@ public class IUserServiceImpl
         implements IUserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(IUserServiceImpl.class);
     private final IUserRepository userRepositoryImpl;
+    private final IRoleRepository roleRepositoryImpl;
     private final HashedCredentialsMatcher hashedCredentialsMatcher;
+    private final TransactionTemplate transactionTemplate;
 
-    public IUserServiceImpl(IUserRepository userRepositoryImpl, HashedCredentialsMatcher hashedCredentialsMatcher) {
-        this.hashedCredentialsMatcher = hashedCredentialsMatcher;
+    public IUserServiceImpl(
+            IUserRepository userRepositoryImpl,
+            IRoleRepository roleRepositoryImpl,
+            HashedCredentialsMatcher hashedCredentialsMatcher,
+            TransactionTemplate transactionTemplate
+    ) {
         this.userRepositoryImpl = userRepositoryImpl;
+        this.roleRepositoryImpl = roleRepositoryImpl;
+        this.hashedCredentialsMatcher = hashedCredentialsMatcher;
+        this.transactionTemplate = transactionTemplate;
     }
 
     @Override
-    public void register(@NonNull UserRegistration userRegistration) {
+    public void registerUserAndAssignDefaultRole(@NonNull UserRegistration userRegistration) {
         User user = new User(userRegistration.getUsername());
 
         Optional<User> userOptional = this.userRepositoryImpl.findOne(Example.of(user));
@@ -59,7 +70,11 @@ public class IUserServiceImpl
         String newPassword = PasswordEncryption.encryptPassword(hashAlgorithmName, userRegistration.getPassword(), salt, hashIterations);
         user.setPassword(newPassword); // 保存加密之后的密码到用户记录中.
 
-        this.userRepositoryImpl.saveAndFlush(user);
+        this.transactionTemplate.execute(status -> {
+            long userId = this.userRepositoryImpl.saveAndFlush(user).getId();   // 添加用户.
+            this.roleRepositoryImpl.assignRoleToUser(userId, 1L);               // 为用户分配角色.
+            return null;
+        });
     }
 
     @Override
