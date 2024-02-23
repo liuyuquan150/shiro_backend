@@ -24,6 +24,6 @@ public interface IUserRepository
      * @param username 用户名, 用于查找与之关联的角色.
      * @return 一个包含角色名称的集合. 如果用户不存在或没有关联的角色, 返回空集合.
      */
-    @Query(value = " SELECT r.name FROM t_role r JOIN t_user_role ur ON r.id = ur.role_id JOIN t_user u ON ur.user_id = u.id WHERE u.username = :username", nativeQuery = true)
+    @Query(value = " SELECT r.name FROM t_role r JOIN t_user_role ur ON r.id = ur.role_id JOIN t_user u ON ur.user_id = u.id WHERE u.username = :username ", nativeQuery = true)
     Set<String> findRolesByUsername(@Param("username") String username);
 }
