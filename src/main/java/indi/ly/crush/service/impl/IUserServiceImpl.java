@@ -42,7 +42,7 @@ public class IUserServiceImpl
     }
 
     @Override
-    public void regist(@NonNull UserRegistration userRegistration) {
+    public void register(@NonNull UserRegistration userRegistration) {
         User user = new User(userRegistration.getUsername());
 
         Optional<User> userOptional = this.userRepositoryImpl.findOne(Example.of(user));

@@ -31,7 +31,7 @@ public class UserController {
 
     @PostMapping(value = "/v1/users")
     public ResponseResult<?> goToRegister(@RequestBody UserRegistration userRegistration) {
-       this.userServiceImpl.regist(userRegistration);
+       this.userServiceImpl.register(userRegistration);
         return ResponseResult.ok("注册成功");
     }
 

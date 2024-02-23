@@ -22,7 +22,7 @@ public interface IUserService {
      *
      * @param userRegistration 包含注册信息的的实例.
      */
-    void regist(@NonNull UserRegistration userRegistration);
+    void register(@NonNull UserRegistration userRegistration);
     /**
      * <p>
      *     用户登录操作. <br /> <br />
