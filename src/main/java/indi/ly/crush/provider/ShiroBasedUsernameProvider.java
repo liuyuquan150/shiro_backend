@@ -63,6 +63,6 @@ public class ShiroBasedUsernameProvider
             }
         }
         // 返回 "anonymous" 或其它默认值对于未认证的用户是一个常见做法.
-        return "system";
+        return "SYSTEM";
     }
 }
