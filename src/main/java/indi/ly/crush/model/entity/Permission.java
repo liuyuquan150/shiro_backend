@@ -28,6 +28,153 @@ import java.io.Serial;
  *     </li>
  * </ul>
  *
+ * <h2 style="color: white;">角色表(t_role)</h2>
+ * <table style="border-collapse: collapse; width: 100%;">
+ *     <tr>
+ *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">id</th>
+ *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">name</th>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">SYSTEM_ADMINISTRATOR</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">2</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">USER</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">3</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">GUEST</td>
+ *     </tr>
+ * </table>
+ *
+ * <h2 style="color: white;">权限表(t_permission)</h2>
+ * <table style="border-collapse: collapse; width: 100%;">
+ *     <tr>
+ *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">id</th>
+ *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">pid</th>
+ *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">url</th>
+ *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">name</th>
+ *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">type</th>
+ *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">description</th>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">0</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">null</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">User Management</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">MODULE</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Manage user accounts and information</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">2</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">/users/create</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Create User</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">BUTTON</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Create a new user account</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">3</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">/users/delete</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Delete User</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">BUTTON</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Delete an existing user account</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">4</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">0</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">null</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Report Viewing</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">MODULE</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Access and view reports</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">5</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">4</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">/reports/download</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Download Report</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">BUTTON</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Download report files</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">6</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">0</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">/dashboard</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Access Dashboard</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">BUTTON</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Access the application dashboard</td>
+ *     </tr>
+ * </table>
+ *
+ * <h2 style="color: white;">角色与权限关联表(t_role_permissions)</h2>
+ * <table style="border-collapse: collapse; width: 100%;">
+ *     <tr>
+ *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">role_id</th>
+ *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">permissions_id</th>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">2</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">3</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">4</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">5</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">6</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">2</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">4</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">2</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">6</td>
+ *     </tr>
+ *     <tr>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">3</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">6</td>
+ *     </tr>
+ * </table>
+ * <p>
+ *     解释
+ *     <ul>
+ *         <li>
+ *             角色: <br />
+ *             我们有三个角色, 系统管理员(SYSTEM_ADMINISTRATOR)拥有所有权限, 包括用户管理和报告查看;
+ *             普通用户(USER)可以访问报告模块和仪表盘; 而访客(GUEST)仅能访问仪表盘.
+ *         </li>
+ *         <li>
+ *             权限: <br />
+ *             权限分为两种类型, 模块(MODULE)和按钮(BUTTON). <br />
+ *             模块类型的权限如 “用户管理” 和 “报告查看” 不直接关联到 {@code URL}, 表示一组功能或操作. <br />
+ *             按钮类型的权限如 “创建用户”、“删除用户” 和 “下载报告” 等关联到具体的 {@code URL}, 表示单一的操作.
+ *         </li>
+ *         <li>
+ *             角色与权限关联: <br />
+ *             通过 {@code t_role_permissions} 表关联角色与权限.
+ *             例如, 系统管理员(SYSTEM_ADMINISTRATOR)角色有权执行所有操作, 包括用户管理和报告查看的所有相关操作.
+ *         </li>
+ *     </ul>
+ *     这个示例展示了如何在实际应用中设置角色和权限的数据结构, 以及如何通过角色来间接管理用户的权限. <br />
+ *     这种模型可以根据具体的应用需求进行调整和扩展.
+ * </p>
+ *
  * @since 1.0
  * @author 云上的云
  * @formatter:off
