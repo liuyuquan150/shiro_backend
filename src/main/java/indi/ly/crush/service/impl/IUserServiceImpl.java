@@ -90,14 +90,19 @@ public class IUserServiceImpl
                 Principal 通常是用户的标识信息, 如用户名或用户对象, 具体取决于 Realm 的实现.
              */
             subject.login(token);
+
+            LOGGER.info("用户 [{}] 认证成功.", token.getUsername());
+
+            // 确保 Realm doGetAuthenticationInfo 方法返回的是 User 类型.
+            return (User) subject.getPrincipal();
         } catch (IncorrectCredentialsException e) {     // 密码不一致.
             LOGGER.error("{} =======> {}", e.getClass(), e.getMessage());
             throw new IncorrectCredentialsException("密码错误, 登录失败.");
+        } finally {
+            if (!token.isRememberMe()) {
+                // 在登录信息不再需要时立即清除, 以减少数据泄露的风险, 消除以后访问内存的可能性. "http://java.sun.com/j2se/1.5.0/docs/guide/security/jce/JCERefGuide.html#PBEEx"
+                token.clear();
+            }
         }
-
-        LOGGER.info("用户 [{}] 认证成功.", token.getUsername());
-
-        // 确保 Realm doGetAuthenticationInfo 方法返回的是 User 类型.
-        return (User) subject.getPrincipal();
     }
 }
