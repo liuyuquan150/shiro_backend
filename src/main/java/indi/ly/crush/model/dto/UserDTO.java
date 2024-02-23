@@ -23,10 +23,6 @@ public class UserDTO
      */
     private String username;
     /**
-     * @see User#getNickname() User#nickname
-     */
-    private String nickname;
-    /**
      * @see User#getGender() User#gender
      */
     private Gender gender;
@@ -41,14 +37,6 @@ public class UserDTO
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
     }
 
     public Gender getGender() {
