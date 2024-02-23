@@ -1,0 +1,18 @@
+### 用户注册
+POST http://localhost:80/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "云上的云",
+  "password": "12138"
+}
+
+### 用户登录
+POST http://localhost:80/api/v1/login
+Content-Type: application/json
+
+{
+  "username": "云上的云",
+  "password": "12138",
+  "rememberMe": true
+}
