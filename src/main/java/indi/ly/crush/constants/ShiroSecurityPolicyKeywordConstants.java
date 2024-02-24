@@ -1,5 +1,6 @@
 package indi.ly.crush.constants;
 
+import indi.ly.crush.filter.AnyOfRolesAuthorizationFilter;
 import org.apache.shiro.web.filter.authc.*;
 import org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter;
 import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
@@ -116,7 +117,7 @@ public final class ShiroSecurityPolicyKeywordConstants {
      *
      * @see PermissionsAuthorizationFilter
      */
-    public static final String PERMS = "perms[%s]";
+    public static final String PERMS = "perms";
     /**
      * <p>
      *     {@link PortFilter 端口过滤器}
@@ -124,7 +125,7 @@ public final class ShiroSecurityPolicyKeywordConstants {
      *
      * @see PortFilter
      */
-    public static final String PORT = "port[%d]";
+    public static final String PORT = "port";
     /**
      * <p>
      *     {@link HttpMethodPermissionFilter 方法权限过滤器}
@@ -132,7 +133,7 @@ public final class ShiroSecurityPolicyKeywordConstants {
      *
      * @see HttpMethodPermissionFilter
      */
-    public static final String REST = "rest[%s]";
+    public static final String REST = "rest";
     /**
      * <p>
      *     {@link RolesAuthorizationFilter 角色授权过滤器}
@@ -140,7 +141,7 @@ public final class ShiroSecurityPolicyKeywordConstants {
      *
      * @see RolesAuthorizationFilter
      */
-    public static final String ROLES = "roles[%s]";
+    public static final String ROLES = "roles";
     /**
      * <p>
      *     {@link SslFilter SSL 过滤器}
@@ -157,6 +158,21 @@ public final class ShiroSecurityPolicyKeywordConstants {
      * @see UserFilter
      */
     public static final String USER = "user";
+
+
+    /*--------------------------------------------
+    |                  自定义过滤器                 |
+    ============================================*/
+
+
+    /**
+     * <p>
+     *     {@link AnyOfRolesAuthorizationFilter 任意角色授权过滤器}
+     * </p>
+     *
+     * @see AnyOfRolesAuthorizationFilter
+     */
+    public static final String ANY_OF_ROLES = "anyOfRoles";
 
     private ShiroSecurityPolicyKeywordConstants() {}
 }
