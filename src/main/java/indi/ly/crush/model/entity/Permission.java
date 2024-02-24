@@ -273,10 +273,10 @@ public class Permission
     private String url;
     /**
      * <p>
-     *     权限的名称, 用于标识权限的目的或作用, 例如 “管理用户”、“查看报告” 等.
+     *     权限的唯一名称, 用于标识权限的目的或作用, 例如 “管理用户”、“查看报告” 等.
      * </p>
      */
-    @Column(nullable = false, length = 100)
+    @Column(unique = true, nullable = false, length = 100)
     private String name;
     /**
      * <p>
@@ -293,6 +293,16 @@ public class Permission
      */
     @Column
     private String description;
+
+    public Permission() {
+    }
+
+    public Permission(String url, String name, PermissionType type, String description) {
+        this.url = url;
+        this.name = name;
+        this.type = type;
+        this.description = description;
+    }
 
     public Long getPid() {
         return pid;

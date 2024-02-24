@@ -10,6 +10,8 @@ logging:
 spring:
   application:
     name: universal_tools
+  config:
+    import: custom/app.yml
   web:
     resources:
       static-locations: >

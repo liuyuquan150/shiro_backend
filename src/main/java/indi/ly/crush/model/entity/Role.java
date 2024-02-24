@@ -188,10 +188,10 @@ public class Role
 	private static final long serialVersionUID = 362498820763181265L;
 	/**
 	 * <p>
-	 *     角色名.
+	 *     角色的唯一名称, 用于标识角色.
 	 * </p>
 	 */
-	@Column(nullable = false, length = 128)
+	@Column(unique = true, nullable = false, length = 128)
 	private String name;
 	/**
 	 * <p>

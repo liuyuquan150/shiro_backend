@@ -1,0 +1,55 @@
+UserManagement: User Management
+CreateUser: Create User
+DeleteUser: Delete User
+
+ReportViewing: Report Viewing
+DownloadReport: Download Report
+
+AccessDashboard: Access Dashboard
+
+app:
+  # 通过权限的 name 或其它唯一标识符来指定角色应拥有的权限.
+  permissions:
+    - pname:
+      url:
+      name: ${UserManagement}
+      type: MODULE
+      description: Manage user accounts and information
+    - pname: ${UserManagement}
+      url: /users/create
+      name: ${CreateUser}
+      type: BUTTON
+      description: Create a new user account
+    - pname: ${UserManagement}
+      url: /users/delete
+      name: ${DeleteUser}
+      type: BUTTON
+      description: Delete an existing user account
+    - pname:
+      url:
+      name: ${ReportViewing}
+      type: MODULE
+      description: Access and view reports
+    - pname: ${ReportViewing}
+      url: /reports/download
+      name: ${DownloadReport}
+      type: BUTTON
+      description: Download report files
+    - pname:
+      url: /dashboard
+      name: ${AccessDashboard}
+      type: BUTTON
+      description: Access the application dashboard
+  roles:
+    - name: SYSTEM_ADMINISTRATOR
+      permissions:
+        - ${UserManagement}
+        - ${CreateUser}
+        - ${DeleteUser}
+        - ${ReportViewing}
+        - ${DownloadReport}
+        - ${AccessDashboard}
+    - name: USER
+      permissions:
+        - ${ReportViewing}
+        - ${AccessDashboard}
