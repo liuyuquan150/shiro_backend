@@ -54,7 +54,8 @@ public class UserRealm
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        String username = (String) principals.getPrimaryPrincipal();
+        User user = (User) principals.getPrimaryPrincipal();
+        String username = user.getUsername();
         LOGGER.debug("为用户 [{}] 加载角色和权限.", username);
 
         Set<String> roles = this.userRepository.findRolesByUsername(username);
