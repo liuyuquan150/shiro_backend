@@ -221,7 +221,7 @@ public class Permission
      *     </ol>
      *
      *     层级权限 <br />
-     *     {@code Shiro} 的通配符权限还支持层级权限, 即如果你有一个更高层级的权限, 你也自动拥有所有下级的权限. <br/ >
+     *     {@code Shiro} 的通配符权限还支持层级权限, 即如果你有一个更高层级的权限, 你也自动拥有所有下级的权限. <br />
      *     例如:
      *     <ul>
      *         <li>如果你有 {@code user:*}, 你也有 {@code user:view}、{@code user:edit} 等所有子权限.</li>
