@@ -1,12 +1,10 @@
 package indi.ly.crush.model.dto;
 
 import indi.ly.crush.enums.Gender;
-import indi.ly.crush.model.entity.Role;
 import indi.ly.crush.model.entity.User;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * <h2>用户数据传输对象</h2>
@@ -26,10 +24,6 @@ public class UserDTO
      * @see User#getGender() User#gender
      */
     private Gender gender;
-    /**
-     * @see User#getRoles() User#roles
-     */
-    private List<Role> roles;
 
     public String getUsername() {
         return username;
@@ -45,13 +39,5 @@ public class UserDTO
 
     public void setGender(Gender gender) {
         this.gender = gender;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
     }
 }
