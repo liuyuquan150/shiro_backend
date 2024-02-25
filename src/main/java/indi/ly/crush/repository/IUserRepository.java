@@ -16,7 +16,15 @@ import java.util.Set;
  */
 public interface IUserRepository
         extends JpaRepository<User, Long> {
-    @Query(value = "SELECT new indi.ly.crush.model.entity.User(u.username, u.password, u.salt) FROM User u WHERE u.username = :username")
+    /**
+     * <p>
+     *     使用 {@code JPQL} 根据给定的用户名(<em>username</em>)查找与之关联的用户.
+     * </p>
+     *
+     * @param username 用户名, 用于查找与之关联的用户.
+     * @return 一个包含用户名、密码和盐值的 {@link User} 实例. 如果没有找到匹配的用户, 返回 {@code null}.
+     */
+    @Query(value = "SELECT new User(u.username, u.password, u.salt) FROM User u WHERE u.username = :username")
     User findUserByUsername(@Param("username") String username);
     /**
      * <p>
