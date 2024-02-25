@@ -62,14 +62,22 @@ public class UserRealm
 
         // 加载用户的角色.
         Set<String> roles = this.userRepository.findRolesByUsername(username);
+        LOGGER.info("用户 [{}] 加载的角色 [{}].", username, roles);
+
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo(roles);
 
         // 加载用户的直接权限.
         Set<String> permissions = this.userRepository.findPermissionsByUsername(username);
+        LOGGER.info("用户 [{}] 加载的直接权限 [{}].", username, permissions);
+
+        // 加载用户通过角色获得的间接权限.
+        Set<String> rolePermissions = this.userRepository.findRolePermissionsByUsername(username);
+        LOGGER.info("用户 [{}] 加载的角色权限 [{}].", username, rolePermissions);
+
+        // 合并直接权限和角色权限.
+        permissions.addAll(rolePermissions);
         authorizationInfo.setStringPermissions(permissions);
 
-        LOGGER.info("用户 [{}] 加载的角色 [{}].", username, roles);
-        LOGGER.info("用户 [{}] 加载的直接权限 [{}].", username, permissions);
         return authorizationInfo;
     }
 
