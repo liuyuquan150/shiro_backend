@@ -11,7 +11,7 @@ import java.util.List;
  * <p>
  *     角色通常指的是用户组的标识, 它表示一组用户的集合. 角色用于对一类具有相似访问和操作需求的用户进行分组. <br />
  *     例如, 一个 {@link indi.ly.crush.enums.Role#SYSTEM_ADMINISTRATOR 管理员} 角色可能包括对系统设置进行更改的能力,
- *     而一个 {@link indi.ly.crush.enums.Role#USER 用户} 角色可能只能查看内容而不能进行任何更改.
+ *     而一个 {@link indi.ly.crush.enums.Role#GUEST 用户} 角色可能只能查看内容而不能进行任何更改.
  * </p>
  * <br />
  *
@@ -112,44 +112,53 @@ import java.util.List;
  * <h2 style="color: white;">角色与权限关联表(t_role_permissions)</h2>
  * <table style="border-collapse: collapse; width: 100%;">
  *     <tr>
- *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">role_id</th>
- *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">permissions_id</th>
+ *         <th style="width: 50px; border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">id</th>
+ *         <th style="width: 50px; border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">pid</th>
+ *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">permission</th>
+ *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">name</th>
+ *         <th style="border: 2px solid white; text-align: left; padding: 8px; background-color: #555; color: white;">description</th>
  *     </tr>
  *     <tr>
  *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
- *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">0</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">user:*</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">User Management</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Manage user accounts and information</td>
  *     </tr>
  *     <tr>
- *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
  *         <td style="border: 2px solid white; text-align: left; padding: 8px;">2</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">user:create</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Create User</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Create a new user account</td>
  *     </tr>
  *     <tr>
- *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
  *         <td style="border: 2px solid white; text-align: left; padding: 8px;">3</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">user:delete</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Delete User</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Delete an existing user account</td>
  *     </tr>
  *     <tr>
- *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
  *         <td style="border: 2px solid white; text-align: left; padding: 8px;">4</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">0</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">report:*</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Report Viewing</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Access and view reports</td>
  *     </tr>
  *     <tr>
- *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
  *         <td style="border: 2px solid white; text-align: left; padding: 8px;">5</td>
- *     </tr>
- *     <tr>
- *         <td style="border: 2px solid white; text-align: left; padding: 8px;">1</td>
- *         <td style="border: 2px solid white; text-align: left; padding: 8px;">6</td>
- *     </tr>
- *     <tr>
- *         <td style="border: 2px solid white; text-align: left; padding: 8px;">2</td>
  *         <td style="border: 2px solid white; text-align: left; padding: 8px;">4</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">report:download</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Download Report</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Download report files</td>
  *     </tr>
  *     <tr>
- *         <td style="border: 2px solid white; text-align: left; padding: 8px;">2</td>
  *         <td style="border: 2px solid white; text-align: left; padding: 8px;">6</td>
- *     </tr>
- *     <tr>
- *         <td style="border: 2px solid white; text-align: left; padding: 8px;">3</td>
- *         <td style="border: 2px solid white; text-align: left; padding: 8px;">6</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">0</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">dashboard:access</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Access Dashboard</td>
+ *         <td style="border: 2px solid white; text-align: left; padding: 8px;">Access the application dashboard</td>
  *     </tr>
  * </table>
  * <p>
@@ -159,12 +168,6 @@ import java.util.List;
  *             角色: <br />
  *             我们有三个角色, 系统管理员(SYSTEM_ADMINISTRATOR)拥有所有权限, 包括用户管理和报告查看;
  *             普通用户(USER)可以访问报告模块和仪表盘; 而访客(GUEST)仅能访问仪表盘.
- *         </li>
- *         <li>
- *             权限: <br />
- *             权限分为两种类型, 模块(MODULE)和按钮(BUTTON). <br />
- *             模块类型的权限如 “用户管理” 和 “报告查看” 不直接关联到 {@code URL}, 表示一组功能或操作. <br />
- *             按钮类型的权限如 “创建用户”、“删除用户” 和 “下载报告” 等关联到具体的 {@code URL}, 表示单一的操作.
  *         </li>
  *         <li>
  *             角色与权限关联: <br />

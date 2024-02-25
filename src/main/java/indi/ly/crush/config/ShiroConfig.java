@@ -101,6 +101,45 @@ public class ShiroConfig {
      *         <li>{@code "/api/v1/guest/**"}: 允许匿名访问的游客 {@code API} 路径.</li>
      *         <li>{@code "/api/v1/**"}: 所有其它 {@code API} 路径都需要认证后访问.</li>
      *     </ul>
+     *
+     *     在 {@code Apache Shiro} 框架中, 过滤器链定义(Filter Chain Definitions)是一个非常重要的概念, 用于指定如何对应用中的不同URL路径应用不同的安全策略. <br />
+     *     这些安全策略包括认证(authc)、授权(roles、perms 等)、匿名访问(anon)等. <br />
+     *     过滤器链定义通过一系列的键值对来配置, 其中键是指 {@code URL} 模式(支持 {@code Ant} 风格的路径模式), 值是对应的过滤器链. <br /> <br />
+     *
+     *     过滤器链的顺序要求 <br />
+     *     {@code Shiro} 的过滤器链定义是有顺序要求的, 这是因为 {@code Shiro} 将根据添加过滤器到链中的顺序来应用这些过滤器. <br />
+     *     {@code Shiro} 会按照定义的顺序, 对匹配的请求依次应用每个过滤器, 直到某个过滤器处理了请求(比如进行了认证跳转)或者请求通过了所有过滤器. <br />
+     *     这意味着:
+     *     <ol>
+     *         <li>
+     *             顺序很重要: <br />
+     *             如果你有多个规则可以匹配同一个 {@code URL} 路径, 那么 {@code Shiro} 只会应用第一个匹配的规则. <br />
+     *             因此, 你需要仔细考虑过滤器链的定义顺序, 确保它们按照你期望的方式工作.
+     *         </li>
+     *         <li>
+     *             更具体的规则应该放在前面: <br />
+     *             通常, 更具体的 {@code URL} 路径匹配规则应该放在更通用的规则之前. <br />
+     *             比如, 对于特定的 {@code API} 端点应用特定的安全策略, 应该先定义这些特定端点的规则, 然后再定义更通用的规则.
+     *         </li>
+     *         <li>
+     *             默认规则应放在最后: <br />
+     *             一个常见的做法是在过滤器链定义的最后放置一个捕获所有请求的规则(如 {@code /**}、{@code /api/**}), 以应用默认的安全策略. <br />
+     *             这确保了所有未被前面规则匹配的请求都会被处理.
+     *         </li>
+     *     </ol>
+     *
+     *     假设我们有以下的过滤器链定义:
+     *     <pre>{@code
+     *                  Map<String, String> filterChain = new LinkedHashMap<>();
+     *                  filterChain.put("/api/special/**", "authc, roles[special]");
+     *                  filterChain.put("/api/**", "anon");
+     *                  filterChain.put("/**", "authc");
+     *     }</pre>
+     *     <ul>
+     *         <li>对于路径 {@code /api/special/**}, 请求首先需要认证({@code authc}), 然后需要拥有 {@code special} 角色({@code roles[special]}).</li>
+     *         <li>对于路径 {@code /api/**}, 请求允许匿名访问.</li>
+     *         <li>所有其它请求({@code /**})需要认证.</li>
+     *     </ul>
      * </p>
      *
      * @return 一个包含路径模式与安全策略映射的 {@link Map} 对象.
