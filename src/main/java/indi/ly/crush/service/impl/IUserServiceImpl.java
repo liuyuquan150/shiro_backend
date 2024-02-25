@@ -116,8 +116,8 @@ public class IUserServiceImpl
         user.setPassword(newPassword); // 保存加密之后的密码到用户记录中.
 
         this.transactionTemplate.execute(status -> {
-            long userId = this.userRepositoryImpl.saveAndFlush(user).getId();                           // 添加用户.
-            this.roleRepositoryImpl.assignRoleToUser(userId, (long) Role.USER.ordinal());               // 为用户分配角色.
+            long userId = this.userRepositoryImpl.saveAndFlush(user).getId();                                           // 添加用户.
+            this.roleRepositoryImpl.assignRoleToUser(userId, (long) Role.SYSTEM_ADMINISTRATOR.ordinal());               // 为用户分配角色.
             return null;
         });
     }
