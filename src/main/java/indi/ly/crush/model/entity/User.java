@@ -63,7 +63,7 @@ import java.util.List;
  *
  * @since 1.0
  * @author 云上的云
- * @formatter:off
+ * @formatter:of
  */
 @Entity
 @Table(name = "t_user", schema = "shiro_backend")
@@ -110,6 +110,50 @@ public class User
 			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
 	)
 	private List<Role> roles;
+	/**
+	 * <p>
+	 *     用户直接拥有的所有权限. <br /> <br />
+	 *
+	 *     有时我们会使用用户名直接匹配权限而不是先匹配角色再匹配权限, 这取决于系统的设计和需求. <br />
+	 *     下面是一些为什么可能会采用这种设计的原因:
+	 *     <ol>
+	 *         <li>
+	 *             直接权限分配: <br />
+	 *             在某些系统中, 除了通过角色间接赋予权限之外, 还允许直接给用户分配权限. <br />
+	 *             这种设计提供了更灵活的权限管理方式, 允许对特定用户进行精细化的权限控制.
+	 *         </li>
+	 *         <li>
+	 *             简化的权限模型: <br />
+	 *             直接通过用户名匹配权限可以简化权限管理模型, 尤其是在权限结构比较简单或者用户量不大的系统中. <br />
+	 *             这种方式减少了角色管理的复杂度, 使得权限管理更为直观.
+	 *         </li>
+	 *         <li>
+	 *             性能考虑: <br />
+	 *             在某些情况下, 如果用户与权限之间的关系比用户与角色、角色与权限之间的关系更为直接, 直接查询权限可能会更高效. <br />
+	 *             特别是在用户-权限关系相对固定, 而且查询频繁的场景下.
+	 *         </li>
+	 *         <li>
+	 *             特殊权限需求: <br />
+	 *             某些用户可能需要一些特殊的权限, 这些权限不属于任何角色. <br />
+	 *             直接分配权限可以确保这些用户获得所需的特殊权限, 而不必为他们创建独特的角色.
+	 *         </li>
+	 *         <li>
+	 *             角色与权限混合使用: <br />
+	 *             在实际应用中, 可能同时使用角色和直接权限两种方式. <br />
+	 *             例如, 基本权限通过角色分配, 而特殊权限直接分配给用户. 这种混合方式提供了更大的灵活性和精确控制.
+	 *         </li>
+	 *     </ol>
+	 *     尽管直接通过用户名匹配权限在某些情况下有其优势,
+	 *     但在复杂的系统中, 通过角色管理权限通常是更优的选择, 因为它可以减少管理的复杂性，提高权限变更的效率, 并且使权限分配更加清晰和可管理. <br />
+	 * </p>
+	 */
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(
+			name = "t_user_permission",
+			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id")
+	)
+	private List<Permission> permissions;
 	/**
 	 * <p>
 	 *     是否锁定: 0-否 1-是.
@@ -183,6 +227,14 @@ public class User
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	public List<Permission> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(List<Permission> permissions) {
+		this.permissions = permissions;
 	}
 
 	public Boolean getLocked() {

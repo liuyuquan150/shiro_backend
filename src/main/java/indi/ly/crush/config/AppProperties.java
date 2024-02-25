@@ -1,6 +1,5 @@
 package indi.ly.crush.config;
 
-import indi.ly.crush.enums.PermissionType;
 import indi.ly.crush.model.entity.Permission;
 import indi.ly.crush.model.entity.Role;
 import lombok.NonNull;
@@ -63,17 +62,13 @@ public class AppProperties {
          */
         private String pname = null;
         /**
-         * @see Permission#getUrl() url
-         */
-        private String url;
-        /**
          * @see Permission#getName() name
          */
         private String name;
         /**
-         * @see Permission#getType() type
+         * @see Permission#getPermission() permission
          */
-        private PermissionType type;
+        private String permission;
         /**
          * @see Permission#getDescription() description
          */
@@ -87,14 +82,6 @@ public class AppProperties {
             this.pname = pname;
         }
 
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
         public String getName() {
             return name;
         }
@@ -103,12 +90,12 @@ public class AppProperties {
             this.name = name;
         }
 
-        public PermissionType getType() {
-            return type;
+        public String getPermission() {
+            return permission;
         }
 
-        public void setType(PermissionType type) {
-            this.type = type;
+        public void setPermission(String permission) {
+            this.permission = permission;
         }
 
         public String getDescription() {
@@ -120,7 +107,7 @@ public class AppProperties {
         }
 
         public @NonNull Permission toPermission() {
-            return new Permission(this.url, this.name, this.type, this.description);
+            return new Permission(this.name, this.permission, this.description);
         }
 
         public boolean hasParentPermission() {

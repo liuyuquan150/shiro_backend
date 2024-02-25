@@ -7,6 +7,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.lang.util.ByteSource;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,7 @@ import java.util.Set;
  * </p>
  *
  * @since 1.0
+ * @see JdbcRealm
  * @author 云上的云
  * @formatter:off
  */
@@ -58,10 +60,16 @@ public class UserRealm
         String username = user.getUsername();
         LOGGER.debug("为用户 [{}] 加载角色和权限.", username);
 
+        // 加载用户的角色.
         Set<String> roles = this.userRepository.findRolesByUsername(username);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo(roles);
 
+        // 加载用户的直接权限.
+        Set<String> permissions = this.userRepository.findPermissionsByUsername(username);
+        authorizationInfo.setStringPermissions(permissions);
+
         LOGGER.info("用户 [{}] 加载的角色 [{}].", username, roles);
+        LOGGER.info("用户 [{}] 加载的直接权限 [{}].", username, permissions);
         return authorizationInfo;
     }
 

@@ -11,34 +11,28 @@ app:
   # 通过权限的 name 或其它唯一标识符来指定角色应拥有的权限.
   permissions:
     - pname:
-      url:
       name: ${UserManagement}
-      type: MODULE
+      permission: user:*
       description: Manage user accounts and information
     - pname: ${UserManagement}
-      url: /users/create
       name: ${CreateUser}
-      type: BUTTON
+      permission: user:create
       description: Create a new user account
     - pname: ${UserManagement}
-      url: /users/delete
       name: ${DeleteUser}
-      type: BUTTON
+      permission: user:delete
       description: Delete an existing user account
     - pname:
-      url:
       name: ${ReportViewing}
-      type: MODULE
+      permission: report:*
       description: Access and view reports
     - pname: ${ReportViewing}
-      url: /reports/download
       name: ${DownloadReport}
-      type: BUTTON
+      permission: report:download
       description: Download report files
     - pname:
-      url: /dashboard
       name: ${AccessDashboard}
-      type: BUTTON
+      permission: dashboard:access
       description: Access the application dashboard
   roles:
     - name: SYSTEM_ADMINISTRATOR
@@ -49,7 +43,6 @@ app:
         - ${ReportViewing}
         - ${DownloadReport}
         - ${AccessDashboard}
-    - name: USER
+    - name: GUEST
       permissions:
-        - ${ReportViewing}
         - ${AccessDashboard}
