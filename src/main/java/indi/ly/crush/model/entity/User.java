@@ -63,7 +63,7 @@ import java.util.List;
  *
  * @since 1.0
  * @author 云上的云
- * @formatter:of
+ * @formatter:off
  */
 @Entity
 @Table(name = "t_user", schema = "shiro_backend")
