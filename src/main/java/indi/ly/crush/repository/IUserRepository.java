@@ -16,6 +16,8 @@ import java.util.Set;
  */
 public interface IUserRepository
         extends JpaRepository<User, Long> {
+    @Query(value = "SELECT u.username, u.password, u.salt FROM User u")
+    User findUserByUsername(String name);
     /**
      * <p>
      *     使用原生 {@code SQL} 根据给定的用户名(<em>username</em>)查找与之关联的所有角色名称.

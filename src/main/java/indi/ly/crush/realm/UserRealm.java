@@ -11,9 +11,7 @@ import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Example;
 
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -93,20 +91,12 @@ public class UserRealm
             throw new UnknownAccountException("用户名不存在.");
         }
 
-        Example<User> userExample = Optional
-                                            .of(username)
-                                            .map(User :: new)
-                                            .map(Example :: of)
-                                            .get();
-
-
-        Optional<User> userOptional = this.userRepository.findOne(userExample);
-        if (userOptional.isEmpty()) {
+        User user = this.userRepository.findUserByUsername(username);
+        if (user == null) {
             LOGGER.error("未找到用户 [{}].", username);
             throw new AuthenticationException("用户不存在.");
         }
 
-        User user = userOptional.get();
         // 确保密码和盐得到妥善处理.
         if (user.getPassword() == null || user.getSalt() == null) {
             throw new AuthenticationException("用户认证信息不完整.");
