@@ -3,7 +3,7 @@ package indi.ly.crush.encryp;
 import lombok.NonNull;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.lang.util.ByteSource;
+import org.apache.shiro.util.SimpleByteSource;
 
 /**
  * <h2>密码加密</h2>
@@ -34,7 +34,7 @@ public final class PasswordEncryption {
             @NonNull String algorithmName, @NonNull String password,
             @NonNull String salt, int iterations
     ) {
-        return new SimpleHash(algorithmName, password, ByteSource.Util.bytes(salt), iterations).toHex();
+        return new SimpleHash(algorithmName, password, new SimpleByteSource(salt), iterations).toHex();
     }
 
     /**

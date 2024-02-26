@@ -6,7 +6,7 @@ import indi.ly.crush.filter.CustomizableResponseRolesAuthorizationFilter;
 import indi.ly.crush.realm.UserRealm;
 import indi.ly.crush.repository.IUserRepository;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.lang.codec.Base64;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
