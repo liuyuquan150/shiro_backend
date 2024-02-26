@@ -8,6 +8,10 @@ DownloadReport: Download Report
 AccessDashboard: Access Dashboard
 
 app:
+  cipher-key: mJJWmPPUlusJsxp3qjaqw8i+22qqUGwSnwbgjsuYlCo=  # AES256 生成
+  remember-me:
+    max-age: 5
+    time-unit: MINUTES
   # 通过权限的 name 或其它唯一标识符来指定角色应拥有的权限.
   permissions:
     - pname:

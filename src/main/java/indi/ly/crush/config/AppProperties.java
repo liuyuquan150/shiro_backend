@@ -2,7 +2,9 @@ package indi.ly.crush.config;
 
 import indi.ly.crush.model.entity.Permission;
 import indi.ly.crush.model.entity.Role;
+import indi.ly.crush.util.base.BaseStringUtil;
 import lombok.NonNull;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -33,6 +35,8 @@ public class AppProperties {
      */
     private List<RoleConfig> roles = new LinkedList<>();
 
+    private RememberMeConfig rememberMe;
+
     public List<PermissionConfig> getPermissions() {
         return permissions;
     }
@@ -47,6 +51,14 @@ public class AppProperties {
 
     public void setRoles(List<RoleConfig> roles) {
         this.roles = roles;
+    }
+
+    public RememberMeConfig getRememberMe() {
+        return rememberMe;
+    }
+
+    public void setRememberMe(RememberMeConfig rememberMe) {
+        this.rememberMe = rememberMe;
     }
 
     /**
@@ -150,6 +162,92 @@ public class AppProperties {
 
         public @NonNull Role toRole() {
             return new Role(this.name.name());
+        }
+    }
+
+    /**
+     * <h2>记住我配置类</h2>
+     *
+     * @see SimpleCookie
+     * @see ShiroConfig#createCookieRememberMeManagerBean(AppProperties)
+     */
+    public static class RememberMeConfig {
+        /**
+         * <p>
+         *     {@code RememberMe Cookie} 的名称, 默认为 {@code rememberMe}.
+         * </p>
+         *
+         * @see SimpleCookie#setName(String)
+         */
+        private String cookieName = "rememberMe";
+        /**
+         * <p>
+         *     {@code RememberMe Cookie} 的有效期, 默认为 {@code 30} 天.
+         * </p>
+         *
+         * @see SimpleCookie#setMaxAge(int)
+         */
+        private int maxAge = 30;
+        /**
+         * <p>
+         *     {@link #maxAge} 属性的单位, 默认为秒.
+         * </p>
+         */
+        private TimeUnit timeUnit = TimeUnit.DAYS;
+
+        public String getCookieName() {
+            return cookieName;
+        }
+
+        public void setCookieName(String cookieName) {
+            if (BaseStringUtil.notHasText(cookieName)) {
+                throw new IllegalArgumentException("不是一个合法的 RememberMe Cookie 名称.");
+            }
+            this.cookieName = cookieName;
+        }
+
+        public int getMaxAge() {
+            return timeUnit.convertTimeToSeconds(maxAge);
+        }
+
+        public void setMaxAge(int maxAge) {
+            if (maxAge <= 0) {
+                throw new IllegalArgumentException("不是一个合法的 RememberMe Cookie 有效期.");
+            }
+            this.maxAge = maxAge;
+        }
+
+        public void setTimeUnit(TimeUnit timeUnit) {
+            this.timeUnit = timeUnit;
+        }
+
+        public TimeUnit getTimeUnit() {
+            return timeUnit;
+        }
+    }
+
+    /**
+     * <h2>时间单位枚举类</h2>
+     *
+     * @see RememberMeConfig
+     */
+    public enum TimeUnit {
+        MINUTES, HOURS, DAYS;
+
+        /**
+         * <p>
+         *     将给定的时间量转换为秒.
+         * </p>
+         *
+         * @param time 待转换为秒的时间量.
+         * @return 以秒为单位的等效时间.
+         */
+        private int convertTimeToSeconds(int time) {
+            return switch (this) {
+                case DAYS -> time * 24 * 60 * 60;
+                case HOURS -> time * 60 * 60;
+                case MINUTES -> time * 60;
+            };
         }
     }
 }

@@ -6,10 +6,15 @@ import indi.ly.crush.filter.CustomizableResponseRolesAuthorizationFilter;
 import indi.ly.crush.realm.UserRealm;
 import indi.ly.crush.repository.IUserRepository;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.lang.codec.Base64;
+import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.tomcat.util.net.openssl.ciphers.MessageDigest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,6 +35,9 @@ import static indi.ly.crush.constants.ShiroSecurityPolicyKeywordConstants.*;
 @Configuration
 public class ShiroConfig {
 
+    @Value("${app.cipher-key}")
+    private String cipherKeyBase64;
+
     @Bean
     public HashedCredentialsMatcher createHashedCredentialsMatcherBean() {
         HashedCredentialsMatcher h = new HashedCredentialsMatcher();
@@ -49,10 +57,33 @@ public class ShiroConfig {
     }
 
     @Bean
-    public DefaultWebSecurityManager createDefaultWebSecurityManagerBean(List<Realm> realms) {
+    public CookieRememberMeManager createCookieRememberMeManagerBean(AppProperties appProperties) {
+        AppProperties.RememberMeConfig rememberMeConfig = appProperties.getRememberMe();
+
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+
+        SimpleCookie rememberMeCookie = new SimpleCookie(rememberMeConfig.getCookieName());
+        rememberMeCookie.setMaxAge(rememberMeConfig.getMaxAge());
+        cookieRememberMeManager.setCookie(rememberMeCookie);
+
+        /*
+            使用强大的加密算法和密钥来保护 “记住我” cookie.
+            确保使用安全的算法(如 AES)和足够长度的密钥（如 256 位), 并且密钥应该是随机生成的.
+            密钥应该安全存储, 避免硬编码在配置文件或代码中. 考虑使用环境变量或安全的配置管理服务来存储密钥.
+         */
+        cookieRememberMeManager.setCipherKey(Base64.decode(this.cipherKeyBase64));
+        return cookieRememberMeManager;
+    }
+
+    @Bean
+    public DefaultWebSecurityManager createDefaultWebSecurityManagerBean(
+            List<Realm> realms, RememberMeManager rememberMeManager
+    ) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置此 SecurityManager 实例管理的 Realm(SecurityManager 的认证器、授权器要完成校验, 需要 Realm 提供安全信息).
         securityManager.setRealms(realms);
+        // 配置记住我管理器.
+        securityManager.setRememberMeManager(rememberMeManager);
         return securityManager;
     }
 
