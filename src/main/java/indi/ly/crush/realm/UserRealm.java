@@ -40,6 +40,7 @@ import java.util.Set;
  *
  * @since 1.0
  * @see JdbcRealm
+ * @see AuthorizingRealm#getAuthorizationInfo(PrincipalCollection)
  * @author 云上的云
  * @formatter:off
  */
