@@ -1,0 +1,11 @@
+# 官方文档: https://alexxiyang.github.io/shiro-redis/, 请浏览文档最后的 Spring boot starter.
+
+shiro-redis:
+  redis-manager:
+    host: localhost:6379
+    password:
+    database: 3
+  cache-manager:
+    principal-id-field-name: id
+    key-prefix: "shiro:cache:"
+    expire: 1800

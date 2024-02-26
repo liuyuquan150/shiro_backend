@@ -189,7 +189,8 @@ public class User
 		this.username = username;
 	}
 
-	public User(String username, String password, String salt) {
+	public User(Long id, String username, String password, String salt) {
+		super.setId(id);
 		this.username = username;
 		this.password = password;
 		this.salt = salt;
