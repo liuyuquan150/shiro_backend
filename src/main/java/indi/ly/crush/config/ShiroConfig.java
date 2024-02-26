@@ -95,11 +95,11 @@ public class ShiroConfig {
      *
      *     此方法配置了应用中不同 {@code API} 路径的安全策略, 具体路径和策略包括:
      *     <ul>
-     *         <li>{@code "/api/v1/users"}: 允许匿名访问的注册 {@code API}.</li>
-     *         <li>{@code "/api/v1/login"}: 允许匿名访问的登录 {@code API}.</li>
-     *         <li>{@code "/api/v1/logout"}: 应用登出逻辑.</li>
-     *         <li>{@code "/api/v1/guest/**"}: 允许匿名访问的游客 {@code API} 路径.</li>
-     *         <li>{@code "/api/v1/**"}: 所有其它 {@code API} 路径都需要认证后访问.</li>
+     *         <li>/api/v1/users: 允许匿名访问的用户注册 {@code API}.</li>
+     *         <li>/api/v1/login: 允许匿名访问的用户登录 {@code API}.</li>
+     *         <li>/api/v1/guest/**: 允许匿名访问的游客路径 {@code API} 路径.</li>
+     *         <li>/api/v1/logout: 执行用户登出逻辑的 {@code API}.</li>
+     *         <li>/api/v1/**: 默认情况下, 所有其它 {@code API} 路径都需要已认证后才能访问.</li>
      *     </ul>
      *
      *     在 {@code Apache Shiro} 框架中, 过滤器链定义(Filter Chain Definitions)是一个非常重要的概念, 用于指定如何对应用中的不同URL路径应用不同的安全策略. <br />
@@ -123,7 +123,7 @@ public class ShiroConfig {
      *         </li>
      *         <li>
      *             默认规则应放在最后: <br />
-     *             一个常见的做法是在过滤器链定义的最后放置一个捕获所有请求的规则(如 {@code /**}、{@code /api/**}), 以应用默认的安全策略. <br />
+     *             一个常见的做法是在过滤器链定义的最后放置一个捕获所有请求的规则(如 /**、/api/**), 以应用默认的安全策略. <br />
      *             这确保了所有未被前面规则匹配的请求都会被处理.
      *         </li>
      *     </ol>
@@ -136,9 +136,9 @@ public class ShiroConfig {
      *                  filterChain.put("/**", "authc");
      *     }</pre>
      *     <ul>
-     *         <li>对于路径 {@code /api/special/**}, 请求首先需要认证({@code authc}), 然后需要拥有 {@code special} 角色({@code roles[special]}).</li>
-     *         <li>对于路径 {@code /api/**}, 请求允许匿名访问.</li>
-     *         <li>所有其它请求({@code /**})需要认证.</li>
+     *         <li>对于路径 /api/special/**, 请求首先需要认证(authc), 然后需要拥有 special 角色(roles[special]).</li>
+     *         <li>对于路径 /api/**, 请求允许匿名访问.</li>
+     *         <li>所有其它请求(/**)需要认证.</li>
      *     </ul>
      * </p>
      *
@@ -148,7 +148,6 @@ public class ShiroConfig {
         Map<String, String> filterChain = new LinkedHashMap<>(5);
         filterChain.put("/api/v1/users", ANON);
         filterChain.put("/api/v1/login", ANON);
-        filterChain.put("/api/v1/logout", LOGOUT);
         filterChain.put("/api/v1/guest/**", ANON);
         filterChain.put("/api/v1/**", AUTHC); // 配置所有 /api/** 路径下的请求都需要通过自定义的 authc 过滤器(即 AuthenticationFilter). 其它API需要认证(登录)后访问.
         return filterChain;
