@@ -29,7 +29,7 @@ public class UserController {
         this.userServiceImpl = userServiceImpl;
     }
 
-    @PostMapping(value = "/v1/users")
+    @PostMapping(value = "/v1/register")
     public ResponseResult<?> goToRegister(@RequestBody UserRegistration userRegistration) {
        this.userServiceImpl.registerUserAndAssignDefaultRole(userRegistration);
         return ResponseResult.ok("注册成功");

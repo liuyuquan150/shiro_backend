@@ -126,7 +126,7 @@ public class ShiroConfig {
      *
      *     此方法配置了应用中不同 {@code API} 路径的安全策略, 具体路径和策略包括:
      *     <ul>
-     *         <li>/api/v1/users: 允许匿名访问的用户注册 {@code API}.</li>
+     *         <li>/api/v1/register: 允许匿名访问的用户注册 {@code API}.</li>
      *         <li>/api/v1/login: 允许匿名访问的用户登录 {@code API}.</li>
      *         <li>/api/v1/guest/**: 允许匿名访问的游客路径 {@code API} 路径.</li>
      *         <li>/api/v1/logout: 执行用户登出逻辑的 {@code API}.</li>
@@ -177,7 +177,7 @@ public class ShiroConfig {
      */
     private Map<String, String> createFilterChainDefinitionMap() {
         Map<String, String> filterChain = new LinkedHashMap<>(5);
-        filterChain.put("/api/v1/users", ANON);
+        filterChain.put("/api/v1/register", ANON);
         filterChain.put("/api/v1/login", ANON);
         filterChain.put("/api/v1/guest/**", ANON);
         filterChain.put("/api/v1/**", AUTHC); // 配置所有 /api/** 路径下的请求都需要通过自定义的 authc 过滤器(即 AuthenticationFilter). 其它API需要认证(登录)后访问.
