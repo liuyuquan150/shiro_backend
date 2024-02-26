@@ -1,3 +1,5 @@
+debug: on # 在控制台输出一个自动配置报告, 列出了所有被应用和没有被应用的自动配置类.
+
 server:
   port: 80
 
@@ -6,6 +8,7 @@ logging:
   level:
     indi.ly.crush: trace
 #    root: debug
+#    org.springframework: debug
 
 spring:
   application:
