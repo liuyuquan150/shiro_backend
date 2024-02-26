@@ -18,6 +18,7 @@ import org.crazycake.shiro.RedisCacheManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -33,6 +34,7 @@ import static indi.ly.crush.constants.ShiroSecurityPolicyKeywordConstants.*;
  * @author 云上的云
  * @formatter:off
  */
+@DependsOn("redisCacheManagerOverrideConfig")   // 保证 RedisCacheManagerOverrideConfig 先于本配置类注入, 让 RedisCacheManager Bean 的属性修改生效.
 @Configuration
 public class ShiroConfig {
 
