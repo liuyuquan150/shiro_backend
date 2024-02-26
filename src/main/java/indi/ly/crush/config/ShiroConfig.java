@@ -87,7 +87,7 @@ public class ShiroConfig {
         return securityManager;
     }
 
-    @Bean
+    @Bean(name = "shiroFilterFactoryBean")
     public ShiroFilterFactoryBean createShiroFilterFactoryBeanBean(DefaultWebSecurityManager defaultWebSecurityManager) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(defaultWebSecurityManager);
