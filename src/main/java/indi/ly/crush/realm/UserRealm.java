@@ -97,6 +97,10 @@ public class UserRealm
             throw new AuthenticationException("用户不存在.");
         }
 
+        if (user.getLocked()) {
+            throw new LockedAccountException("账号已被锁定.");
+        }
+
         // 确保密码和盐得到妥善处理.
         if (user.getPassword() == null || user.getSalt() == null) {
             throw new AuthenticationException("用户认证信息不完整.");
