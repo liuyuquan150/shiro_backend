@@ -12,19 +12,19 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum Gender {
 	/**
 	 * <p>
-	 *     性别之一: 女.
+	 *     女.
 	 * </p>
 	 */
 	FEMALE("女"),
 	/**
 	 * <p>
-	 *     性别之一: 男.
+	 *     男.
 	 * </p>
 	 */
 	MALE("男"),
 	/**
 	 * <p>
-	 *     性别之一: 私密.
+	 *     私密.
 	 * </p>
 	 */
 	UNKNOWN("私密");
