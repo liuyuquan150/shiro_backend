@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * <h2>{@code JPA} 基础实体类</h2>
  * <p>
- *     在 {@link AbstractJpaEntity} 的基础拓展了创建者和最后修改者.
+ *     在 {@link AbstractJpaEntity} 的基础上拓展了创建者和最后修改者.
  * </p>
  *
  * @since 1.0
