@@ -108,9 +108,9 @@ public class ShiroConfig {
      *
      *     该方法定义了几种自定义过滤器, 用于不同的安全需求, 包括:
      *     <ul>
-     *         <li>authc: 使用自定义响应表单认证过滤器.</li>
      *         <li>roles: 使用自定义响应角色授权过滤器.</li>
-     *         <li>authc: 使用自定义的任意角色授权过滤器, 允许基于多个角色进行授权.</li>
+     *         <li>anyOfRoles: 使用自定义的任意角色授权过滤器, 允许基于多个角色进行授权.</li>
+     *         <li>authc: 使用自定义响应表单认证过滤器.</li>
      *     </ul>
      * </p>
      *
@@ -118,9 +118,9 @@ public class ShiroConfig {
      */
     private Map<String, Filter> createFilters() {
         Map<String, Filter> filters = new LinkedHashMap<>(3);
-        filters.put(AUTHC, new CustomizableResponseFormAuthenticationFilter());
         filters.put(ROLES, new CustomizableResponseRolesAuthorizationFilter());
         filters.put(ANY_OF_ROLES, new AnyOfRolesAuthorizationFilter());
+        filters.put(AUTHC, new CustomizableResponseFormAuthenticationFilter());
         return filters;
     }
 
