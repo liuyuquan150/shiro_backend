@@ -14,11 +14,9 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.tomcat.util.net.openssl.ciphers.MessageDigest;
-import org.crazycake.shiro.RedisCacheManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
@@ -34,7 +32,6 @@ import static indi.ly.crush.constants.ShiroSecurityPolicyKeywordConstants.*;
  * @author 云上的云
  * @formatter:off
  */
-@DependsOn("redisCacheManagerOverrideConfig")   // 保证 RedisCacheManagerOverrideConfig 先于本配置类注入, 让 RedisCacheManager Bean 的属性修改生效.
 @Configuration
 public class ShiroConfig {
 
@@ -80,8 +77,7 @@ public class ShiroConfig {
 
     @Bean
     public DefaultWebSecurityManager createDefaultWebSecurityManagerBean(
-            List<Realm> realms, RememberMeManager rememberMeManager,
-            RedisCacheManager cacheManager
+            List<Realm> realms, RememberMeManager rememberMeManager
     ) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 设置此 SecurityManager 实例管理的 Realm(SecurityManager 的认证器、授权器要完成校验, 需要 Realm 提供安全信息).
@@ -89,7 +85,7 @@ public class ShiroConfig {
         // 配置记住我管理器.
         securityManager.setRememberMeManager(rememberMeManager);
         // 配置缓存管理.
-        securityManager.setCacheManager(cacheManager);
+//        securityManager.setCacheManager();
         return securityManager;
     }
 
