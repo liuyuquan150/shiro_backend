@@ -15,8 +15,7 @@ spring:
     name: universal_tools
   config:
     import: >
-              custom/app.yml,
-              custom/shiro-redis.yml
+              custom/app.yml
   web:
     resources:
       static-locations: >
