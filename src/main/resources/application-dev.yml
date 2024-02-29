@@ -42,7 +42,7 @@ spring:
     #
     # 通常, spring.jpa.generate-ddl 与 ddl-auto 一起使用来提供对数据库结构自动生成的完全控制.
     # 例如, 将 generate-ddl 设置为 true 并将 ddl-auto 设置为 update 可以在开发过程中自动更新数据库结构,
-    # 而无需手动处理SQL脚本.
+    # 而无需手动处理 SQL 脚本.
     #
     # generate-ddl: 是否让 JPA 自动根据实体类生成数据库表结构.
     generate-ddl: true

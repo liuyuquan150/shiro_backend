@@ -29,6 +29,7 @@ import static indi.ly.crush.constants.ShiroSecurityPolicyKeywordConstants.*;
  * <h2>Shiro 配置</h2>
  *
  * @since 1.0
+ * @see <a href="https://developer.aliyun.com/article/849911">Shiro实现记住我(十)</a>
  * @author 云上的云
  * @formatter:off
  */
