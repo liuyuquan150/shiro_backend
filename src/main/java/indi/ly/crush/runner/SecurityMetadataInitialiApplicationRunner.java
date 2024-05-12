@@ -69,7 +69,7 @@ public class SecurityMetadataInitialiApplicationRunner
             Map<String, Permission> permissionMap = this.initializePermissionsIfNeeded();
             this.assignPermissionsToRoles(roleGroup, permissionMap);
         } catch (Exception e) {
-            LOGGER.error("Failed to initialize auth metadata.", e);
+            LOGGER.error("初始化认证元数据失败.", e);
             // 在出现异常时重新抛出, 会导致应用启动失败, 这取决于具体的应用需求.
             throw e;
         }
@@ -99,7 +99,7 @@ public class SecurityMetadataInitialiApplicationRunner
                                                                                     .stream()
                                                                                     .collect(Collectors.toMap(Permission :: getName, Function.identity()));
 
-        LOGGER.info("Initialized default permissions.");
+        LOGGER.info("初始化默认权限完毕.");
 
         // 建立权限之间的父子关系.
         this.establishParentChildRelationships(permissionMap);
@@ -111,7 +111,7 @@ public class SecurityMetadataInitialiApplicationRunner
      * <p>
      *     建立权限之间的父子关系. <br /> <br />
      *
-     *     为什么要多此一举使用 “权限名称({@code pname})” 而不是 “数据库 {@code ID}({@code pid})” 来建立关系的原因如下:
+     *     为什么要多此一举使用{@code 权限名称}({@code pname})而不是{@code 数据库 ID}({@code pid})来建立关系的原因如下:
      *     <ol>
      *         <li>
      *             配置文件可读性: <br />
@@ -119,13 +119,13 @@ public class SecurityMetadataInitialiApplicationRunner
      *             而且, {@code ID} 是数据库生成的数字, 可能难以追踪.
      *         </li>
      *         <li>
-     *             避免直接依赖数据库 {@code ID}(初始化时数据库 {@code ID} 未知): <br />
-     *             在应用启动时, 数据库中尚未存在任何权限数据, 因此无法预先知道任何权限的 “数据库 {@code ID}”. <br />
+     *             避免直接依赖数据库 {@code ID}(初始化时{@code 数据库 ID} 未知): <br />
+     *             在应用启动时, 数据库中尚未存在任何权限数据, 因此无法预先知道任何权限的{@code 数据库 ID}. <br />
      *             使用名称({@code pname})作为引用允许我们在不依赖数据库生成的 {@code ID} 的情况下, 预先定义好权限之间的层级关系.
      *         </li>
      *         <li>
      *             灵活性和解耦: <br />
-     *             这种设计使得权限数据的初始化逻辑不直接依赖于数据库中的具体 {@code ID} 值(减少了对特定数据库{@code ID}的依赖),
+     *             这种设计使得权限数据的初始化逻辑不直接依赖于数据库中的具体 {@code ID} 值(减少了对特定{@code 数据库 ID}的依赖),
      *             使得权限结构更容易在不同环境或数据库间迁移和重用.
      *         </li>
      *     </ol>
@@ -180,7 +180,7 @@ public class SecurityMetadataInitialiApplicationRunner
                                                     .toList();
 
         List<Role> saveRoles = this.roleRepositoryImpl.saveAll(roles);
-        LOGGER.info("Initialized default roles.");
+        LOGGER.info("初始化默认角色完毕.");
 
         return saveRoles;
     }

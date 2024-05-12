@@ -21,7 +21,7 @@ import java.util.List;
  *         <li>
  *             灵活性: <br />
  *             通过为单一用户分配多个角色, 可以灵活地组合不同的权限集, 以适应用户的具体需求. <br />
- *             例如, 一个用户可能同时是 “项目经理” 和 “质量保证分析师”, 每个角色都有其独特的权限.
+ *             例如, 一个用户可能同时是{@code 项目经理}和{@code 质量保证分析师}, 每个角色都有其独特的权限.
  *         </li>
  *         <li>
  *             简化管理: <br />
@@ -89,7 +89,7 @@ public class User
 	 * <p>
 	 *     盐. <br /> <br />
 	 *
-	 *     在哈希{@link #password 密码}之前向{@link #password 密码}添加一个随机值(<em>即盐</em>),
+	 *     在哈希{@link #password 密码}之前向{@link #password 密码}添加一个随机值(盐),
 	 *     这样做可以大大增加破解存储的密码的难度, 因为即使两个用户具有相同的密码, 它们的哈希值也会因为盐的不同而不同.
 	 * </p>
 	 */
@@ -156,21 +156,21 @@ public class User
 	private List<Permission> permissions;
 	/**
 	 * <p>
-	 *     是否锁定: 0-否 1-是.
+	 *     是否锁定: {@code 0}-否 {@code 1}-是.
 	 * </p>
 	 */
 	@Column(columnDefinition = "TINYINT(1) UNSIGNED NOT NULL COMMENT '是否锁定: 0-否 1-是'")
 	private Boolean locked = false;
 	/**
 	 * <p>
-	 *     是否可用: 0-否 1-是.
+	 *     是否可用: {@code 0}-否 {@code 1}-是.
 	 * </p>
 	 */
 	@Column(columnDefinition = "TINYINT(1) UNSIGNED NOT NULL COMMENT '是否可用: 0-否 1-是'")
 	private Boolean enabled = true;
 	/**
 	 * <p>
-	 *     最后登录 IP.
+	 *     最后登录 {@code IP}.
 	 * </p>
 	 */
 	@Column(length = 64)

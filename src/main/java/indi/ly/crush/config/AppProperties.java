@@ -201,7 +201,7 @@ public class AppProperties {
 
         public void setCookieName(String cookieName) {
             if (BaseStringUtil.notHasText(cookieName)) {
-                throw new IllegalArgumentException("不是一个合法的 RememberMe Cookie 名称.");
+                throw new IllegalArgumentException("RememberMe Cookie 的名称不是合法的: \"%s\".".formatted(cookieName));
             }
             this.cookieName = cookieName;
         }
@@ -212,7 +212,7 @@ public class AppProperties {
 
         public void setMaxAge(int maxAge) {
             if (maxAge <= 0) {
-                throw new IllegalArgumentException("不是一个合法的 RememberMe Cookie 有效期.");
+                throw new IllegalArgumentException("RememberMe Cookie 的有效期必须是一个正整数: %d.".formatted(maxAge));
             }
             this.maxAge = maxAge;
         }

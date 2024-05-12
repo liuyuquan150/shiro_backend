@@ -16,9 +16,9 @@ import org.apache.shiro.web.filter.session.NoSessionCreationFilter;
  * <ol>
  *     <li>
  *         优先级和顺序: <br />
- *         过滤器在配置时的顺序决定了它们的执行顺序(<em>{@code URL} 模式定义遵循 "先匹配者胜 " 的原则</em>). <br />
+ *         过滤器在配置时的顺序决定了它们的执行顺序({@code URL} 模式定义遵循{@code 先匹配者胜}的原则). <br />
  *         通常, 更具体的规则应该放在前面, 而更通用的规则放在后面. <br />
- *         例如, 对于特定 {@code URL} 路径的访问控制(<em>如角色或权限限制</em>)应该先于对所有 {@code URL} 的通用访问控制(<em>如需要认证</em>)进行配置. <br /> <br />
+ *         例如, 对于特定 {@code URL} 路径的访问控制(如角色或权限限制)应该先于对所有 {@code URL} 的通用访问控制(如需要认证)进行配置. <br /> <br />
  *
  *         关于这一点, {@link AnonymousFilter} 源码的类注释上也阐述了这一点并举了例子.
  *     </li>
@@ -70,7 +70,7 @@ public final class ShiroSecurityPolicyKeywordConstants {
      *             含义: 允许匿名访问, 即不需要进行登录或者身份认证就可以访问指定的路径或资源.
      *         </li>
      *         <li>
-     *             用途: 通常用于静态资源(如 CSS、JavaScript 文件)或者某些公开页面(登录页面、首页)的访问控制.
+     *             用途: 通常用于静态资源(如 {@code CSS}、{@code JavaScript} 文件)或者某些公开页面(登录页面、首页)的访问控制.
      *         </li>
      *     </ul>
      * </p>

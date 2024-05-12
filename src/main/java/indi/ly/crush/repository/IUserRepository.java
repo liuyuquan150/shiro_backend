@@ -18,7 +18,7 @@ public interface IUserRepository
         extends JpaRepository<User, Long> {
     /**
      * <p>
-     *     使用 {@code JPQL} 根据给定的用户名(<em>username</em>)查找与之关联的用户.
+     *     使用 {@code JPQL} 根据给定的{@link User#getUsername() 用户名}查找与之关联的用户.
      * </p>
      *
      * @param username 用户名, 用于查找与之关联的用户.
@@ -28,7 +28,7 @@ public interface IUserRepository
     User findUserByUsername(@Param("username") String username);
     /**
      * <p>
-     *     使用原生 {@code SQL} 根据给定的用户名(<em>username</em>)查找与之关联的所有角色名称.
+     *     使用原生 {@code SQL} 根据给定的{@link User#getUsername() 用户名}查找与之关联的所有角色名称.
      * </p>
      *
      * @param username 用户名, 用于查找与之关联的角色.
@@ -47,7 +47,7 @@ public interface IUserRepository
 
     /**
      * <p>
-     *     使用原生 {@code SQL} 根据给定的用户名(<em>username</em>)查找与之关联的所有直接权限的资源标识符.
+     *     使用原生 {@code SQL} 根据给定的{@link User#getUsername() 用户名}查找与之关联的所有直接权限的资源标识符.
      * </p>
      *
      * @param username 用户名, 用于查找与之关联的直接权限.
@@ -66,7 +66,7 @@ public interface IUserRepository
 
     /**
      * <p>
-     *     使用原生 {@code SQL} 查询并返回指定用户名(<em>username</em>)的用户通过其角色获得的所有角色权限(间接权限)的资源标识符. <br /> <br />
+     *     使用原生 {@code SQL} 查询并返回指定{@link User#getUsername() 用户名}的用户通过其角色获得的所有角色权限(间接权限)的资源标识符. <br /> <br />
      *
      *     首先确定用户所拥有的角色, 然后找出这些角色所关联的所有权限.
      * </p>

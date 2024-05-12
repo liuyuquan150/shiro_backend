@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 /**
  * <h2>{@code JPA} 基础实体类</h2>
  * <p>
- *     这是一个 Java 实体类的基础抽象类, 使用 JPA(<em>Java Persistence API</em>)注解进行了标注. <br />
+ *     这是一个 {@code Java} 实体类的基础抽象类, 使用 {@code JPA}({@code Java Persistence API})注解进行了标注. <br />
  *     这个抽象类定义了一些通用属性和配置, 可以被其它实体类继承, 以避免代码重复.
  * </p>
  *

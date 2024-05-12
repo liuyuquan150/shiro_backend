@@ -105,9 +105,9 @@ public class ShiroConfig {
      *
      *     该方法定义了几种自定义过滤器, 用于不同的安全需求, 包括:
      *     <ul>
-     *         <li>roles: 使用自定义响应角色授权过滤器.</li>
-     *         <li>anyOfRoles: 使用自定义的任意角色授权过滤器, 允许基于多个角色进行授权.</li>
-     *         <li>authc: 使用自定义响应表单认证过滤器.</li>
+     *         <li>{@code roles}: 使用自定义响应角色授权过滤器.</li>
+     *         <li>{@code anyOfRoles}: 使用自定义的任意角色授权过滤器, 允许基于多个角色进行授权.</li>
+     *         <li>{@code authc}: 使用自定义响应表单认证过滤器.</li>
      *     </ul>
      * </p>
      *
@@ -136,8 +136,8 @@ public class ShiroConfig {
      *         <li>/api/v1/**: 默认情况下, 所有其它 {@code API} 路径都需要已认证后才能访问.</li>
      *     </ul>
      *
-     *     在 {@code Apache Shiro} 框架中, 过滤器链定义(Filter Chain Definitions)是一个非常重要的概念, 用于指定如何对应用中的不同URL路径应用不同的安全策略. <br />
-     *     这些安全策略包括认证(authc)、授权(roles、perms 等)、匿名访问(anon)等. <br />
+     *     在 {@code Apache Shiro} 框架中, 过滤器链定义({@code Filter Chain Definitions})是一个非常重要的概念, 用于指定如何对应用中的不同URL路径应用不同的安全策略. <br />
+     *     这些安全策略包括认证({@code authc})、授权({@code roles}、{@code perms} 等)、匿名访问({@code anon})等. <br />
      *     过滤器链定义通过一系列的键值对来配置, 其中键是指 {@code URL} 模式(支持 {@code Ant} 风格的路径模式), 值是对应的过滤器链. <br /> <br />
      *
      *     过滤器链的顺序要求 <br />

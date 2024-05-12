@@ -27,7 +27,7 @@ public interface IRoleRepository
 	 * @apiNote
 	 * 			请注意, 提供的 {@code userId} 和 {@code roleId} 所表示的用户跟角色在对应的表中必须存在,
 	 * 			如果 {@code userId} 或 {@code roleId} 所表示的用户或角色不存在,
-	 * 			在插入过程中可能会抛出 {@code SQL} 异常或产生冗余数据(<em>取决数据库表有没有设置外键</em>).
+	 * 			在插入过程中可能会抛出 {@code SQL} 异常或产生冗余数据(取决数据库表有没有设置外键).
 	 */
 	@Modifying
 	@Query(value = " INSERT INTO t_user_role (user_id, role_id) VALUES (?1, ?2) ", nativeQuery = true)

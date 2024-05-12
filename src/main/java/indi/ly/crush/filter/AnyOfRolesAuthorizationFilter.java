@@ -2,6 +2,8 @@ package indi.ly.crush.filter;
 
 import indi.ly.crush.response.ResponseResult;
 import indi.ly.crush.response.ResponseResultEnum;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
@@ -29,7 +31,7 @@ import java.util.Arrays;
  *
  * <h2>示例场景</h2>
  * <p>
- *     假设你正在开发一个内容管理系统(CMS), 其中包含多种类型的内容, 比如新闻、博客和教程. <br />
+ *     假设你正在开发一个内容管理系统({@code CMS}), 其中包含多种类型的内容, 比如新闻、博客和教程. <br />
  *     对于某些特定的操作或内容区域, 你可能希望允许不同类型的用户访问:
  *     <ul>
  *         <li>新闻编辑: 负责创建和编辑新闻内容.</li>
@@ -62,6 +64,9 @@ import java.util.Arrays;
  *
  * @since 1.0
  * @see RolesAuthorizationFilter#isAccessAllowed(ServletRequest, ServletResponse, Object)
+ * @see RequiresPermissions
+ * @see RequiresPermissions#logical()
+ * @see Logical#OR
  * @author 云上的云
  * @formatter:off
  */

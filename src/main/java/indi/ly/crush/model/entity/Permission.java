@@ -11,7 +11,7 @@ import java.io.Serial;
  * <h2>权限</h2>
  * <p>
  *     权限相对于{@link Role 角色}而言则更为具体, 它定义了对系统中特定资源的访问和操作能力. <br />
- *     权限可以细分到非常具体的操作上, 比如 “读取文件”、“编辑文件”、“删除文件” 等.
+ *     权限可以细分到非常具体的操作上, 比如{@code 读取文件}、{@code 编辑文件}、{@code 删除文件} 等.
  * </p>
  * <br />
  *
@@ -20,7 +20,7 @@ import java.io.Serial;
  *     <li>
  *         角色拥有权限: <br />
  *         通常情况下, 角色会被赋予一组权限. 这意味着拥有该角色的用户自动拥有该角色所对应的所有权限. <br />
- *         例如, 如果 “管理员” 角色被赋予了 “删除文件” 的权限, 那么所有 “管理员” 都能删除文件.
+ *         例如, 如果{@code 管理员角色}被赋予了{@code 删除文件}的权限, 那么所有{@code 管理员}都能删除文件.
  *     </li>
  *     <li>
  *         直接赋予权限: <br />
@@ -150,13 +150,13 @@ import java.io.Serial;
  *     <ul>
  *         <li>
  *             角色: <br />
- *             我们有三个角色, 系统管理员(SYSTEM_ADMINISTRATOR)拥有所有权限, 包括用户管理和报告查看;
- *             普通用户(USER)可以访问报告模块和仪表盘; 而访客(GUEST)仅能访问仪表盘.
+ *             我们有 {@code 3} 个角色, 系统管理员({@code SYSTEM_ADMINISTRATOR})拥有所有权限, 包括用户管理和报告查看;
+ *             普通用户({@code USER})可以访问报告模块和仪表盘; 而访客({@code GUEST})仅能访问仪表盘.
  *         </li>
  *         <li>
  *             角色与权限关联: <br />
  *             通过 {@code t_role_permissions} 表关联角色与权限.
- *             例如, 系统管理员(SYSTEM_ADMINISTRATOR)角色有权执行所有操作, 包括用户管理和报告查看的所有相关操作.
+ *             例如, 系统管理员({@code SYSTEM_ADMINISTRATOR})角色有权执行所有操作, 包括用户管理和报告查看的所有相关操作.
  *         </li>
  *     </ul>
  *     这个示例展示了如何在实际应用中设置角色和权限的数据结构, 以及如何通过角色来间接管理用户的权限. <br />
@@ -183,7 +183,7 @@ public class Permission
     private Long pid;
     /**
      * <p>
-     *     权限的唯一名称, 用于标识权限的目的或作用, 例如 “管理用户”、“查看报告” 等.
+     *     权限的唯一名称, 用于标识权限的目的或作用, 例如{@code 管理用户}、{@code 查看报告}等.
      * </p>
      */
     @Column(unique = true, nullable = false, length = 100)
@@ -193,10 +193,9 @@ public class Permission
      *     {@code Shiro} 通配符权限字符串. <br /> <br />
      *
      *     通配符权限格式 <br />
-     *     通配符权限由一系列由冒号(:)分隔的部分组成, 每部分可以使用通配符(*)来匹配任意值. <br /> {@code Shiro} 的通配符权限通常遵循以下格式:
-     *     <pre>{@code
-     *                  domain:action:instance
-     *     }</pre>
+     *     通配符权限由一系列由冒号({@code :})分隔的部分组成, 每部分可以使用通配符({@code *})来匹配任意值. <br />
+     *     {@code Shiro} 的通配符权限通常遵循以下格式: <br />
+     *     {@code domain:action:instance}
      *     <ul>
      *         <li>{@code domain}: 权限的领域或类别, 如 {@code user} 或 {@code file}.</li>
      *         <li>{@code action}: 对领域执行的操作, 如 {@code read}、{@code write}、{@code create} 等.</li>
@@ -206,8 +205,9 @@ public class Permission
      *     使用通配符
      *     <ul>
      *         <li>
-     *             星号(*): <br />
-     *             表示匹配任意值或一系列值., 例如，{@code user:*:123} 表示对 {@code ID} 为 {@code 123} 的用户执行任何操作的权限.
+     *             星号({@code *}): <br />
+     *             表示匹配任意值或一系列值. <br />
+     *             例如, {@code user:*:123} 表示对 {@code ID} 为 {@code 123} 的用户执行任何操作的权限.
      *         </li>
      *     </ul>
      *

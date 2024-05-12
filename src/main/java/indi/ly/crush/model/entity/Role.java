@@ -10,8 +10,8 @@ import java.util.List;
  * <h2>角色</h2>
  * <p>
  *     角色通常指的是用户组的标识, 它表示一组用户的集合. 角色用于对一类具有相似访问和操作需求的用户进行分组. <br />
- *     例如, 一个 {@link indi.ly.crush.enums.Role#SYSTEM_ADMINISTRATOR 管理员} 角色可能包括对系统设置进行更改的能力,
- *     而一个 {@link indi.ly.crush.enums.Role#GUEST 用户} 角色可能只能查看内容而不能进行任何更改.
+ *     例如, 一个{@link indi.ly.crush.enums.Role#SYSTEM_ADMINISTRATOR 管理员角色}可能包括对系统设置进行更改的能力,
+ *     而一个{@link indi.ly.crush.enums.Role#GUEST 用户角色}可能只能查看内容而不能进行任何更改.
  * </p>
  * <br />
  *
@@ -20,7 +20,7 @@ import java.util.List;
  *     <li>
  *         角色拥有权限: <br />
  *         通常情况下, 角色会被赋予一组权限. 这意味着拥有该角色的用户自动拥有该角色所对应的所有权限. <br />
- *         例如, 如果 “管理员” 角色被赋予了 “删除文件” 的权限, 那么所有 “管理员” 都能删除文件.
+ *         例如, 如果{@code 管理员角色}被赋予了{@code 删除文件}的权限, 那么所有{@code 管理员}都能删除文件.
  *     </li>
  *     <li>
  *         直接赋予权限: <br />
@@ -166,13 +166,13 @@ import java.util.List;
  *     <ul>
  *         <li>
  *             角色: <br />
- *             我们有三个角色, 系统管理员(SYSTEM_ADMINISTRATOR)拥有所有权限, 包括用户管理和报告查看;
- *             普通用户(USER)可以访问报告模块和仪表盘; 而访客(GUEST)仅能访问仪表盘.
+ *             我们有 {@code 3} 个角色, 系统管理员({@code SYSTEM_ADMINISTRATOR})拥有所有权限, 包括用户管理和报告查看;
+ *             普通用户({@code USER})可以访问报告模块和仪表盘; 而访客({@code GUEST})仅能访问仪表盘.
  *         </li>
  *         <li>
  *             角色与权限关联: <br />
  *             通过 {@code t_role_permissions} 表关联角色与权限.
- *             例如, 系统管理员(SYSTEM_ADMINISTRATOR)角色有权执行所有操作, 包括用户管理和报告查看的所有相关操作.
+ *             例如, 系统管理员({@code SYSTEM_ADMINISTRATOR})角色有权执行所有操作, 包括用户管理和报告查看的所有相关操作.
  *         </li>
  *     </ul>
  *     这个示例展示了如何在实际应用中设置角色和权限的数据结构, 以及如何通过角色来间接管理用户的权限. <br />

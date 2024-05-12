@@ -2,8 +2,6 @@ package indi.ly.crush;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * <h2>公共应用程序</h2>
@@ -41,8 +39,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * @author 云上的云
  * @formatter:off
  */
-@EnableAsync
-@ServletComponentScan(basePackages = {"indi.ly.crush.filter"})
 @SpringBootApplication(scanBasePackages = {"indi.ly.crush"})
 public class ShiroBackendApplication {
 	public static void main(String[] args) {

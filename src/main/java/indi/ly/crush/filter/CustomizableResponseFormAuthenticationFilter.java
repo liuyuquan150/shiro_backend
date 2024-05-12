@@ -22,7 +22,7 @@ import java.io.IOException;
  *
  * <h2>使用背景</h2>
  * <p>
- *     当前端采用 {@code Vue} 等单页应用(<em>SPA</em>)框架时, 页面的路由处理通常在客户端进行, 而不是通过服务器端的重定向. <br />
+ *     当前端采用 {@code Vue} 等单页应用({@code SPA})框架时, 页面的路由处理通常在客户端进行, 而不是通过服务器端的重定向. <br />
  *     因此, {@code Shiro} 的 {@link ShiroFilterFactoryBean#setLoginUrl(String) setLoginUrl}、
  *     {@link ShiroFilterFactoryBean#setSuccessUrl(String) setSuccessUrl}、
  *     {@link ShiroFilterFactoryBean#setUnauthorizedUrl(String) setUnauthorizedUrl} 等用于配置页面重定向的方法需要以不同的方式来处理. <br /> <br />

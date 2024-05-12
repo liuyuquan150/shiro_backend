@@ -11,6 +11,7 @@ import java.io.Serializable;
  *
  * @since 1.0
  * @author 云上的云
+ * @formatter:off
  */
 public class UserDTO
         implements Serializable {
