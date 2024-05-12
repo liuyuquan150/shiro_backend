@@ -35,7 +35,7 @@
 		<!-- 模块名称/APP名称 -->
 		<Property name="modelName">shiro_backend</Property>
 		<!-- 日志文件绝对路径前缀 -->
-		<Property name="logFileNamePrefix">D:/code/shiro/${modelName}/log/$${date:yyyy-MM-dd}/</Property>
+		<Property name="logFileNamePrefix">E:/log/shiro/${modelName}/$${date:yyyy-MM-dd}/</Property>
 		<!-- 日志文件绝对路径后缀 -->
 		<Property name="logFileNameSuffix">.log</Property>
 		<Property name="allLogFileName">${modelName}_all_$${date:yyyy-MM-dd}</Property>
@@ -79,7 +79,7 @@
 		-->
 		<RollingFile name="RollingErrorFile"
 		             fileName="${logFileNamePrefix}error/${errorLogFileName}${logFileNameSuffix}"
-		             filePattern="D:/code/shiro/${modelName}/log/$${date:yyyy-MM}/dox/error/error.log.%date{yyyy-MM-dd}.gz">
+		             filePattern="E:/log/shiro/${modelName}/$${date:yyyy-MM}/dox/error/error.log.%date{yyyy-MM-dd}.gz">
 			<!--
 				ThresholdFilter 节点用于配置日志输出过滤.
 				level="DEBUG": 日志级别是 DEBUG 级别.
@@ -111,7 +111,7 @@
 		
 		<RollingFile name="RollingWarnFile"
 		             fileName="${logFileNamePrefix}warn/${warnLogFileName}${logFileNameSuffix}"
-		             filePattern="D:/code/shiro/${modelName}/$${date:yyyy-MM}/dox/warn/warn.log.%date{yyyy-MM-dd}.gz">
+		             filePattern="E:/log/shiro/${modelName}/$${date:yyyy-MM}/dox/warn/warn.log.%date{yyyy-MM-dd}.gz">
 			<ThresholdFilter level="WARN"
 			                 onMatch="ACCEPT"
 			                 onMismatch="DENY"/>
@@ -126,7 +126,7 @@
 		
 		<RollingFile name="RollingInfoFile"
 		             fileName="${logFileNamePrefix}info/${infoLogFileName}${logFileNameSuffix}"
-		             filePattern="D:/code/shiro/${modelName}/log/$${date:yyyy-MM}/dox/info/info.log.%date{yyyy-MM-dd}.gz">
+		             filePattern="E:/log/shiro/${modelName}/$${date:yyyy-MM}/dox/info/info.log.%date{yyyy-MM-dd}.gz">
 			<ThresholdFilter level="INFO"
 			                 onMatch="ACCEPT"
 			                 onMismatch="DENY"/>
