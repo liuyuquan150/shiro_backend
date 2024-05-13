@@ -86,4 +86,15 @@ public interface IUserRepository
             nativeQuery = true
     )
     Set<String> findRolePermissionsByUsername(@Param("username") String username);
+
+    /**
+     * <p>
+     *     使用 {@code JPQL} 根据给定的{@link User#getPhoneNumber() 手机号码}查找与之关联的用户.
+     * </p>
+     *
+     * @param phoneNumber 手机号码, 用于查找与之关联的用户.
+     * @return 一个包含用户名、密码和盐值的 {@link User} 实例. 如果没有找到匹配的用户, 返回 {@code null}.
+     */
+    @Query(value = "SELECT new User(u.id, u.username, u.password, u.salt) FROM User u WHERE u.phoneNumber = :phoneNumber")
+    User findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 }

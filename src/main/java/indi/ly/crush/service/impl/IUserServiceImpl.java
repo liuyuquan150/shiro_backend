@@ -6,14 +6,15 @@ import indi.ly.crush.ex.RegistrationFailedException;
 import indi.ly.crush.model.entity.User;
 import indi.ly.crush.model.from.UserCredentials;
 import indi.ly.crush.model.from.UserRegistration;
-import indi.ly.crush.realm.UserRealm;
 import indi.ly.crush.repository.IRoleRepository;
 import indi.ly.crush.repository.IUserRepository;
 import indi.ly.crush.service.IUserService;
+import indi.ly.crush.token.SMSCodeToken;
 import lombok.NonNull;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.RememberMeAuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.subject.Subject;
@@ -72,7 +73,6 @@ import java.util.Optional;
  * </p>
  *
  * @since 1.0
- * @see UserRealm#doGetAuthenticationInfo(AuthenticationToken)
  * @author 云上的云
  * @formatter:off
  */
@@ -124,7 +124,7 @@ public class IUserServiceImpl
 
     @Override
     public @NonNull User login(@NonNull UserCredentials userCredentials) {
-        UsernamePasswordToken token = new UsernamePasswordToken(userCredentials.getUsername(), userCredentials.getPassword(), userCredentials.isRememberMe());
+        AuthenticationToken token = this.createAuthenticationToken(userCredentials);
         Subject subject = SecurityUtils.getSubject();
         try {
             /*
@@ -134,18 +134,48 @@ public class IUserServiceImpl
              */
             subject.login(token);
 
-            LOGGER.info("用户 [{}] 认证成功.", token.getUsername());
+            LOGGER.trace("用户认证成功.");
 
             // 确保 Realm doGetAuthenticationInfo 方法返回的是 User 类型.
             return (User) subject.getPrincipal();
-        } catch (IncorrectCredentialsException e) {     // 密码不一致.
-            LOGGER.error("{} =======> {}", e.getClass(), e.getMessage());
-            throw new IncorrectCredentialsException("密码错误, 登录失败.");
+        } catch (IncorrectCredentialsException e) {     // 用户提供的凭证(比如说密码、短信验证码)不一致.
+            LOGGER.error("用户认证失败. {}", e.getMessage());
+            if (token instanceof UsernamePasswordToken) {
+                throw new IncorrectCredentialsException("密码错误, 登录失败.");
+            }
+            throw e;
         } finally {
-            if (!token.isRememberMe()) {
-                // 在登录信息不再需要时立即清除, 以减少数据泄露的风险, 消除以后访问内存的可能性. "http://java.sun.com/j2se/1.5.0/docs/guide/security/jce/JCERefGuide.html#PBEEx"
-                token.clear();
+            if (token instanceof RememberMeAuthenticationToken rememberMeToken) {
+                if (!rememberMeToken.isRememberMe()) {
+                    if (rememberMeToken instanceof UsernamePasswordToken usernamePasswordToken) {
+                        // 在登录信息不再需要时立即清除, 以减少数据泄露的风险, 消除以后访问内存的可能性. "http://java.sun.com/j2se/1.5.0/docs/guide/security/jce/JCERefGuide.html#PBEEx"
+                        usernamePasswordToken.clear();
+                    }
+                }
             }
         }
+    }
+
+    /**
+     * <p>
+     *     创建 {@link AuthenticationToken} 实例.
+     * </p>
+     *
+     * @param userCredentials 用户凭证信息.
+     * @return {@link AuthenticationToken} 实例.
+     */
+    private @NonNull AuthenticationToken createAuthenticationToken(@NonNull UserCredentials userCredentials) {
+        AuthenticationToken token;
+
+        switch (userCredentials.getLoginType()) {
+            case USERNAME_PASSWORD ->
+                    token = new UsernamePasswordToken(userCredentials.getUsername(), userCredentials.getPassword(), userCredentials.isRememberMe());
+            case SMS_CODE ->
+                    token = new SMSCodeToken(userCredentials.getPhoneNumber(), userCredentials.getCode(), userCredentials.isRememberMe());
+            default ->
+                    throw new IllegalArgumentException("不支持的登录类型: %s.".formatted(userCredentials.getLoginType()));
+        }
+
+        return token;
     }
 }

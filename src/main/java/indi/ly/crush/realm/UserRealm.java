@@ -93,19 +93,7 @@ public class UserRealm
         }
 
         User user = this.userRepository.findUserByUsername(username);
-        if (user == null) {
-            LOGGER.error("未找到用户 [{}].", username);
-            throw new AuthenticationException("用户不存在.");
-        }
-
-        if (user.getLocked()) {
-            throw new LockedAccountException("账号已被锁定.");
-        }
-
-        // 确保密码和盐得到妥善处理.
-        if (user.getPassword() == null || user.getSalt() == null) {
-            throw new AuthenticationException("用户认证信息不完整.");
-        }
+        UserInfoValidator.validate(user);
 
         // Shiro 会自动验证密码是否匹配, 若不匹配会抛出 IncorrectCredentialsException 异常.
         return new SimpleAuthenticationInfo(

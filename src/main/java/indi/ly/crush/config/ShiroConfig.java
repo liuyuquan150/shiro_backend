@@ -1,15 +1,22 @@
 package indi.ly.crush.config;
 
+import indi.ly.crush.authenticator.CustomModularRealmAuthenticator;
 import indi.ly.crush.filter.AnyOfRolesAuthorizationFilter;
 import indi.ly.crush.filter.CustomizableResponseFormAuthenticationFilter;
 import indi.ly.crush.filter.CustomizableResponseRolesAuthorizationFilter;
+import indi.ly.crush.realm.SMSCodeRealm;
 import indi.ly.crush.realm.UserRealm;
 import indi.ly.crush.repository.IUserRepository;
+import org.apache.shiro.authc.Authenticator;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.authz.Authorizer;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -29,6 +36,13 @@ import static indi.ly.crush.constants.ShiroSecurityPolicyKeywordConstants.*;
  * <h2>Shiro 配置</h2>
  *
  * @since 1.0
+ * @see Subject
+ * @see org.apache.shiro.mgt.SecurityManager
+ * @see Authenticator
+ * @see Authorizer
+ * @see Realm
+ * @see CredentialsMatcher
+ * @see SessionManager
  * @see <a href="https://developer.aliyun.com/article/849911">Shiro实现记住我(十)</a>
  * @author 云上的云
  * @formatter:off
@@ -38,6 +52,11 @@ public class ShiroConfig {
 
     @Value("${app.cipher-key}")
     private String cipherKeyBase64;
+
+    @Bean
+    public CustomModularRealmAuthenticator createCustomModularRealmAuthenticatorBean() {
+        return new CustomModularRealmAuthenticator();
+    }
 
     @Bean
     public HashedCredentialsMatcher createHashedCredentialsMatcherBean() {
@@ -55,6 +74,11 @@ public class ShiroConfig {
         // 设置身份验证尝试中使用的凭证匹配器, 以验证提交的凭证(Token 中的密码, 先对其进行加密处理)与系统中存储的凭证(数据库 中的已加密密码)是否一致.
         userRealm.setCredentialsMatcher(matcher);
         return userRealm;
+    }
+
+    @Bean
+    public SMSCodeRealm createSmsRealmBean(IUserRepository userRepository, UserRealm realm) {
+        return new SMSCodeRealm(userRepository, realm);
     }
 
     @Bean
@@ -78,15 +102,15 @@ public class ShiroConfig {
 
     @Bean
     public DefaultWebSecurityManager createDefaultWebSecurityManagerBean(
-            List<Realm> realms, RememberMeManager rememberMeManager
+            CustomModularRealmAuthenticator authenticator, List<Realm> realms, RememberMeManager rememberMeManager
     ) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        // 设置自定义认证器, 替换 Shiro 默认使用的 ModularRealmAuthenticator 认证器. 请保证认证器的设置必须在 Realm 之前.
+        securityManager.setAuthenticator(authenticator);
         // 设置此 SecurityManager 实例管理的 Realm(SecurityManager 的认证器、授权器要完成校验, 需要 Realm 提供安全信息).
         securityManager.setRealms(realms);
         // 配置记住我管理器.
         securityManager.setRememberMeManager(rememberMeManager);
-        // 配置缓存管理.
-//        securityManager.setCacheManager();
         return securityManager;
     }
 
