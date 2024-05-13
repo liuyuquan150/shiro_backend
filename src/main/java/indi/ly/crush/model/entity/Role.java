@@ -1,6 +1,8 @@
 package indi.ly.crush.model.entity;
 
 import indi.ly.crush.domain.AbstractJpaExpansionEntity;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -183,6 +185,9 @@ import java.util.List;
  * @author 云上的云
  * @formatter:off
  */
+@Getter
+@Setter
+
 @Entity
 @Table(name = "t_role", schema = "shiro_backend")
 public class Role
@@ -214,21 +219,5 @@ public class Role
 
 	public Role(String name) {
 		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public List<Permission> getPermissions() {
-		return permissions;
-	}
-
-	public void setPermissions(List<Permission> permissions) {
-		this.permissions = permissions;
 	}
 }

@@ -2,6 +2,8 @@ package indi.ly.crush.model.dto;
 
 import indi.ly.crush.enums.Gender;
 import indi.ly.crush.model.entity.User;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -13,6 +15,8 @@ import java.io.Serializable;
  * @author 云上的云
  * @formatter:off
  */
+@Getter
+@Setter
 public class UserDTO
         implements Serializable {
     @Serial
@@ -25,20 +29,4 @@ public class UserDTO
      * @see User#getGender() User#gender
      */
     private Gender gender;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
 }

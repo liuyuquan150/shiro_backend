@@ -2,6 +2,8 @@ package indi.ly.crush.model.entity;
 
 import indi.ly.crush.domain.AbstractJpaExpansionEntity;
 import indi.ly.crush.enums.Gender;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -65,6 +67,9 @@ import java.util.List;
  * @author 云上的云
  * @formatter:off
  */
+@Getter
+@Setter
+
 @Entity
 @Table(name = "t_user", schema = "shiro_backend")
 public class User
@@ -85,6 +90,13 @@ public class User
 	 */
 	@Column(nullable = false, length = 64)
 	private String password;
+	/**
+	 * <p>
+	 *     手机号码.
+	 * </p>
+	 */
+	@Column(nullable = false, length = 11)
+	private String phoneNumber;
 	/**
 	 * <p>
 	 *     盐. <br /> <br />
@@ -194,85 +206,5 @@ public class User
 		this.username = username;
 		this.password = password;
 		this.salt = salt;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getSalt() {
-		return salt;
-	}
-
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
-
-	public Gender getGender() {
-		return gender;
-	}
-
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
-
-	public List<Permission> getPermissions() {
-		return permissions;
-	}
-
-	public void setPermissions(List<Permission> permissions) {
-		this.permissions = permissions;
-	}
-
-	public Boolean getLocked() {
-		return locked;
-	}
-
-	public void setLocked(Boolean locked) {
-		this.locked = locked;
-	}
-
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public String getLastLoginIp() {
-		return lastLoginIp;
-	}
-
-	public void setLastLoginIp(String lastLoginIp) {
-		this.lastLoginIp = lastLoginIp;
-	}
-
-	public LocalDateTime getLastLoginTime() {
-		return lastLoginTime;
-	}
-
-	public void setLastLoginTime(LocalDateTime lastLoginTime) {
-		this.lastLoginTime = lastLoginTime;
 	}
 }

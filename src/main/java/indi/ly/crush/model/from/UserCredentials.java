@@ -1,6 +1,9 @@
 package indi.ly.crush.model.from;
 
+import indi.ly.crush.enums.LoginType;
 import indi.ly.crush.model.entity.User;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,6 +15,8 @@ import java.io.Serializable;
  * @author 云上的云
  * @formatter:off
  */
+@Getter
+@Setter
 public class UserCredentials
         implements Serializable {
     @Serial
@@ -25,33 +30,25 @@ public class UserCredentials
      */
     private String password;
     /**
+     * @see User#getPhoneNumber() User#phoneNumber
+     */
+    private String phoneNumber;
+    /**
+     * <p>
+     *     短信验证码.
+     * </p>
+     */
+    private String code;
+    /**
      * <p>
      *     记住我.
      * </p>
      */
     private boolean rememberMe;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isRememberMe() {
-        return rememberMe;
-    }
-
-    public void setRememberMe(boolean rememberMe) {
-        this.rememberMe = rememberMe;
-    }
+    /**
+     * <p>
+     *     登录类型.
+     * </p>
+     */
+    private LoginType loginType;
 }

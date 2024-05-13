@@ -1,6 +1,8 @@
 package indi.ly.crush.model.entity;
 
 import indi.ly.crush.domain.AbstractJpaExpansionEntity;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -167,6 +169,9 @@ import java.io.Serial;
  * @author 云上的云
  * @formatter:off
  */
+@Getter
+@Setter
+
 @Entity
 @Table(name = "t_permission", schema = "shiro_backend")
 public class Permission
@@ -246,37 +251,6 @@ public class Permission
     public Permission(String name, String permission, String description) {
         this.name = name;
         this.permission = permission;
-        this.description = description;
-    }
-
-    public Long getPid() {
-        return pid;
-    }
-
-    public void setPid(Long pid) {
-        this.pid = pid;
-    }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPermission() {
-        return permission;
-    }
-
-    public void setPermission(String permission) {
-        this.permission = permission;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
     }
 }
