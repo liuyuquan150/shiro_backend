@@ -37,8 +37,12 @@ import java.util.Optional;
  *      为了避免这种后期内存访问的可能性, 应用程序开发人员应该在使用{@link UsernamePasswordToken 令牌}进行登录尝试后, 始终调用 {@link UsernamePasswordToken#clear()} 方法:
  *      <pre>{@code
  *                  finally {
- *                      if (!token.isRememberMe()) {
- *                          token.clear();
+ *                      if (token instanceof RememberMeAuthenticationToken rememberMeToken) {
+ *                          if (!rememberMeToken.isRememberMe()) {
+ *                              if (rememberMeToken instanceof UsernamePasswordToken usernamePasswordToken) {
+ *                                  usernamePasswordToken.clear();
+ *                              }
+ *                          }
  *                      }
  *                  }
  *      }</pre>
@@ -138,7 +142,7 @@ public class IUserServiceImpl
 
             // 确保 Realm doGetAuthenticationInfo 方法返回的是 User 类型.
             return (User) subject.getPrincipal();
-        } catch (IncorrectCredentialsException e) {     // 用户提供的凭证(比如说密码、短信验证码)不一致.
+        } catch (IncorrectCredentialsException e) { // 用户提供的凭证(比如说密码、短信验证码)不一致.
             LOGGER.error("用户认证失败. {}", e.getMessage());
             if (token instanceof UsernamePasswordToken) {
                 throw new IncorrectCredentialsException("密码错误, 登录失败.");
