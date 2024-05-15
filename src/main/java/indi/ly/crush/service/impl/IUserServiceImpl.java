@@ -118,6 +118,7 @@ public class IUserServiceImpl
 
         String newPassword = PasswordEncryption.encryptPassword(hashAlgorithmName, userRegistration.getPassword(), salt, hashIterations);
         user.setPassword(newPassword); // 保存加密之后的密码到用户记录中.
+        user.setPhoneNumber(userRegistration.getPhoneNumber());
 
         this.transactionTemplate.execute(status -> {
             long userId = this.userRepositoryImpl.saveAndFlush(user).getId();                                               // 添加用户.

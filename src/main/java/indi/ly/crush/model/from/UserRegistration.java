@@ -28,12 +28,17 @@ public class UserRegistration
      * @see User#getPassword() User#password
      */
     private String password;
+    /**
+     * @see User#getPhoneNumber() User#phoneNumber
+     */
+    private String phoneNumber;
 
     public UserRegistration() {
     }
 
-    public UserRegistration(String username, String password) {
+    public UserRegistration(String username, String password, String phoneNumber) {
         this.username = username;
         this.password = password;
+        this.phoneNumber = phoneNumber;
     }
 }

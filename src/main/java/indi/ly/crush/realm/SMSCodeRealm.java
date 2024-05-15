@@ -1,20 +1,19 @@
 package indi.ly.crush.realm;
 
+import indi.ly.crush.json.jaskson.desensitize.DesensitizeStrategyEnum;
 import indi.ly.crush.model.entity.User;
 import indi.ly.crush.repository.IUserRepository;
 import indi.ly.crush.token.SMSCodeToken;
 import indi.ly.crush.util.base.BaseStringUtil;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.SimpleByteSource;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 
 /**
  * <h2>短信验证码安全域(短信验证码认证授权域)</h2>
@@ -69,11 +68,16 @@ public class SMSCodeRealm
         String phoneNumber = smsCodeToken.phoneNumber();
         String smsCode = smsCodeToken.code();
 
-        LOGGER.debug("正在认证用户 [{}].", phoneNumber);
+        LOGGER.debug("正在认证用户 [{}].", DesensitizeStrategyEnum.maskPhoneNumber(phoneNumber));
 
-        // TODO 从 Redis 或其它缓存中获取的短信验证码进行比较.
-        if (BaseStringUtil.notEquals(smsCode, "")) {
-            throw new IncorrectCredentialsException("短信验证码已过期.");
+        String cachedSmsCode = getSmsCodeFromCache(phoneNumber);
+
+        if (cachedSmsCode == null) {
+            throw new ExpiredCredentialsException("短信验证码已过期.");
+        }
+
+        if (BaseStringUtil.notEquals(smsCode, cachedSmsCode)) {
+            throw new IncorrectCredentialsException("输入的短信验证码错误.");
         }
 
         User user = this.userRepository.findByPhoneNumber(phoneNumber);
@@ -81,9 +85,20 @@ public class SMSCodeRealm
 
         return new SimpleAuthenticationInfo(
                 user,
-                user.getPassword(),
-                new SimpleByteSource(user.getSalt()),
+                smsCode,
                 getName()
         );
+    }
+
+    /**
+     * <p>
+     *     从缓存(如 {@code Redis})中获取与指定手机号关联的短信验证码.
+     * </p>
+     *
+     * @param phoneNumber 用户的手机号码.
+     * @return 缓存中的短信验证码, 如果没有找到则返回 {@code null}.
+     */
+    protected @Nullable String getSmsCodeFromCache(@NonNull String phoneNumber) {
+        return null;
     }
 }

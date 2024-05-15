@@ -1,5 +1,6 @@
 package indi.ly.crush.realm;
 
+import indi.ly.crush.json.jaskson.desensitize.DesensitizeStrategyEnum;
 import indi.ly.crush.model.entity.User;
 import indi.ly.crush.repository.IUserRepository;
 import org.apache.shiro.authc.*;
@@ -85,7 +86,7 @@ public class UserRealm
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
         String username = usernamePasswordToken.getUsername();
 
-        LOGGER.debug("正在认证用户 [{}].", username);
+        LOGGER.debug("正在认证用户 [{}].", DesensitizeStrategyEnum.maskUsername(username));
 
         if (username == null) {
             LOGGER.error("尝试使用空用户名进行认证.");
