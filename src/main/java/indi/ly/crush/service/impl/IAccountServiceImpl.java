@@ -8,7 +8,7 @@ import indi.ly.crush.model.from.UserCredentials;
 import indi.ly.crush.model.from.UserRegistration;
 import indi.ly.crush.repository.IRoleRepository;
 import indi.ly.crush.repository.IUserRepository;
-import indi.ly.crush.service.IUserService;
+import indi.ly.crush.service.IAccountService;
 import indi.ly.crush.token.SMSCodeToken;
 import lombok.NonNull;
 import org.apache.shiro.SecurityUtils;
@@ -27,7 +27,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import java.util.Optional;
 
 /**
- * <h2>用户服务实现</h2>
+ * <h2>账户服务实现</h2>
  * <h2>在 Java 程序中安全地处理密码等敏感信息的最佳实践</h2>
  * <p>
  *     {@link UsernamePasswordToken} 将密码被存储为字符数组 {@code char[]} 而不是字符串 {@code String}, 这是出于对安全性的考虑. <br />
@@ -81,15 +81,15 @@ import java.util.Optional;
  * @formatter:off
  */
 @Service
-public class IUserServiceImpl
-        implements IUserService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(IUserServiceImpl.class);
+public class IAccountServiceImpl
+        implements IAccountService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(IAccountServiceImpl.class);
     private final IUserRepository userRepositoryImpl;
     private final IRoleRepository roleRepositoryImpl;
     private final HashedCredentialsMatcher hashedCredentialsMatcher;
     private final TransactionTemplate transactionTemplate;
 
-    public IUserServiceImpl(
+    public IAccountServiceImpl(
             IUserRepository userRepositoryImpl,
             IRoleRepository roleRepositoryImpl,
             HashedCredentialsMatcher hashedCredentialsMatcher,
@@ -140,7 +140,6 @@ public class IUserServiceImpl
             subject.login(token);
 
             LOGGER.trace("用户认证成功.");
-
             // 确保 Realm doGetAuthenticationInfo 方法返回的是 User 类型.
             return (User) subject.getPrincipal();
         } catch (IncorrectCredentialsException e) { // 用户提供的凭证(比如说密码、短信验证码)不一致.

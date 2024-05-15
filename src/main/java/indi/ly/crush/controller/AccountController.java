@@ -5,7 +5,7 @@ import indi.ly.crush.model.entity.User;
 import indi.ly.crush.model.from.UserCredentials;
 import indi.ly.crush.model.from.UserRegistration;
 import indi.ly.crush.response.ResponseResult;
-import indi.ly.crush.service.IUserService;
+import indi.ly.crush.service.IAccountService;
 import indi.ly.crush.util.support.BaseSpringBeanUtil;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/")
 public class AccountController {
 
-    private final IUserService userServiceImpl;
+    private final IAccountService userServiceImpl;
 
-    public AccountController(IUserService userServiceImpl) {
+    public AccountController(IAccountService userServiceImpl) {
         this.userServiceImpl = userServiceImpl;
     }
 

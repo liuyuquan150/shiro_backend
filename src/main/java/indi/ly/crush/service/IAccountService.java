@@ -6,13 +6,13 @@ import indi.ly.crush.model.from.UserRegistration;
 import lombok.NonNull;
 
 /**
- * <h2>用户服务接口定义</h2>
+ * <h2>账户服务接口定义</h2>
  *
  * @since 1.0
  * @author 云上的云
  * @formatter:off
  */
-public interface IUserService {
+public interface IAccountService {
     /**
      * <p>
      *     注册用户并分配默认角色. <br /> <br />
