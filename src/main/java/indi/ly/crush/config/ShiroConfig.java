@@ -11,6 +11,7 @@ import org.apache.shiro.authc.Authenticator;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.Authorizer;
+import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.RememberMeManager;
 import org.apache.shiro.realm.Realm;
@@ -111,6 +112,8 @@ public class ShiroConfig {
         securityManager.setRealms(realms);
         // 配置记住我管理器.
         securityManager.setRememberMeManager(rememberMeManager);
+        // 配置缓存管理器.
+        securityManager.setCacheManager(new MemoryConstrainedCacheManager());
         return securityManager;
     }
 
