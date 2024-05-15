@@ -11,23 +11,23 @@
 <configuration status="ERROR"
                monitorInterval="30">
 	<!--
-		%t：线程名称
+		%t: 线程名称
 
-		%p：日志级别
+		%p: 日志级别
 
-		%c：日志消息所在类名
+		%c: 日志消息所在类名
 
-		%m：消息内容
+		%m: 消息内容
 
-		%M：输出执行方法
+		%M: 输出执行方法
 
-		%d：发生时间，%d{yyyy-MM-dd HH:mm:ss,SSS}，输出类似：2011-10-18 22:10:28,921
+		%d: 发生时间，%d{yyyy-MM-dd HH:mm:ss,SSS}，输出类似: 2011-10-18 22:10:28,921
 
 		%x: 输出和当前线程相关联的NDC(嵌套诊断环境),尤其用到像java servlets这样的多客户多线程的应用中。
 
-		%L：代码中的行数
+		%L: 代码中的行数
 
-		%n：换行
+		%n: 换行
 	-->
 
 	<!-- 自定义常量, 在 log4j2 配置文件内部可以通过 ${常量名} 引用该常量 -->
@@ -55,7 +55,7 @@
 		<Console name="Console"
 		         target="SYSTEM_OUT">
 			<!-- PatternLayout 节点用于配置输出日志行文格式 -->
-			<PatternLayout pattern="${modelName}：${logFormat}"/>
+			<PatternLayout pattern="${modelName}: ${logFormat}"/>
 		</Console>
 
 		<!--
@@ -161,7 +161,7 @@
 
 		<!--
 			logger 节点用于单独指定日志的形式, 比如要为指定包下的 Class 指定不同的日志级别等.
-			name 属性：用于指定该 logger 所适用的类或者类所在的包全路径, 继承自root节点.
+			name 属性: 用于指定该 logger 所适用的类或者类所在的包全路径, 继承自root节点.
 			level 属性: 日志输出级别.
 		-->
 		<logger name="Kafka" additivity="false" level="DEBUG">
