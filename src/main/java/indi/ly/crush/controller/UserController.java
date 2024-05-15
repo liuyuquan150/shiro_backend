@@ -1,5 +1,6 @@
 package indi.ly.crush.controller;
 
+import indi.ly.crush.constants.PermissionNameConstants;
 import indi.ly.crush.constants.RoleNameConstants;
 import indi.ly.crush.response.ResponseResult;
 import org.apache.shiro.authz.annotation.Logical;
@@ -39,7 +40,7 @@ public class UserController {
     */
 
     @RequiresRoles(value = RoleNameConstants.SYSTEM_ADMINISTRATOR)
-    @RequiresPermissions(value = {"user:*", "user:delete"}, logical = Logical.OR)
+    @RequiresPermissions(value = {PermissionNameConstants.USER_ALL, PermissionNameConstants.USER_DELETE}, logical = Logical.OR)
     @PostMapping(value = "del")
     public ResponseResult<?> goToDeleteUser(@RequestParam Long userId) {
         return ResponseResult.ok("编号为 [%d] 的用户删除成功".formatted(userId));
