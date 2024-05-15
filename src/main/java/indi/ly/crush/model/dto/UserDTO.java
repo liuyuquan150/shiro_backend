@@ -22,6 +22,10 @@ public class UserDTO
     @Serial
     private static final long serialVersionUID = 362498820763181265L;
     /**
+     * @see User#getId() User#id
+     */
+    private Long id;
+    /**
      * @see User#getUsername() User#username
      */
     private String username;
