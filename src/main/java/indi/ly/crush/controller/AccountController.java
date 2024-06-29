@@ -1,6 +1,6 @@
 package indi.ly.crush.controller;
 
-import indi.ly.crush.model.dto.UserDTO;
+import indi.ly.crush.model.vo.UserVO;
 import indi.ly.crush.model.entity.User;
 import indi.ly.crush.model.from.UserCredentials;
 import indi.ly.crush.model.from.UserRegistration;
@@ -37,10 +37,10 @@ public class AccountController {
     }
 
     @PostMapping(value = "/v1/login")
-    public ResponseResult<UserDTO> goToLogin(@RequestBody UserCredentials userCredentials) {
+    public ResponseResult<UserVO> goToLogin(@RequestBody UserCredentials userCredentials) {
         User user = this.userServiceImpl.login(userCredentials);
-        UserDTO userDTO = BaseSpringBeanUtil.shallowCopyObject(user, new UserDTO(), null, null);
-        return ResponseResult.ok(userDTO).message("登录成功");
+        UserVO userVO = BaseSpringBeanUtil.shallowCopyObject(user, new UserVO(), null, null);
+        return ResponseResult.ok(userVO).message("登录成功");
     }
 
     @PostMapping(value = "/v1/logout")

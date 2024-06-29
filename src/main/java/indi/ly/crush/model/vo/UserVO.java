@@ -1,4 +1,4 @@
-package indi.ly.crush.model.dto;
+package indi.ly.crush.model.vo;
 
 import indi.ly.crush.enums.Gender;
 import indi.ly.crush.model.entity.User;
@@ -9,7 +9,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * <h2>用户数据传输对象</h2>
+ * <h2>用户视图对象</h2>
  *
  * @since 1.0
  * @author 云上的云
@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class UserDTO
+public class UserVO
         implements Serializable {
     @Serial
     private static final long serialVersionUID = 362498820763181265L;
