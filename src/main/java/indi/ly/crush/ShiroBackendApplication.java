@@ -17,7 +17,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * <h3>特殊注释的含义</h3>
  * <ul>
  *     <li>
- *         BUG: 该注释下方的代码存在 BUG.</li>
+ *         BUG: 该注释下方的代码存在 BUG.
+ *     </li>
  *     <li>
  *         HACK: 该注释下方的代码实现走了一个捷径, 应当包含为何使用 HACK 的原因, 这也可能表明该问题可能会有更好的解决方法.
  *     </li>
