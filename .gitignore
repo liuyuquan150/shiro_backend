@@ -5,3 +5,4 @@
 /.git/
 /img/
 /src/main/resources/META-INF/additional-spring-configuration-metadata.json
+/*.iml
