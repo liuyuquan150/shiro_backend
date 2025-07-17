@@ -1,14 +1,16 @@
 # 官方文档: https://www.jetbrains.com/help/idea/javascript-specific-guidelines.html
 
-### 用户(SYSTEM_ADMINISTRATOR 或 GUEST)注册
+### 用户注册
 
 < {%
     import {generateUsername, generateChinesePhoneNumber} from "./utils";
 
-    /* 设置全局变量	整个 HTTP 文件、整个测试过程都能使用. */
     client.global.set("username", generateUsername());
     client.global.set("password", "12138");
     client.global.set("phoneNumber", generateChinesePhoneNumber());
+
+    const role = "GUEST"; // 可修改为 "SYSTEM_ADMINISTRATOR"
+    client.global.set("role", role);
 %}
 
 POST {{baseUrl}}/api/v1/register
@@ -18,11 +20,42 @@ Content-Type: application/json
   "username": "{{username}}",
   "password": "{{password}}",
   "phoneNumber" : "{{phoneNumber}}",
-  "role": "GUEST"
+  "role": "{{role}}"
 }
 
 > {%
     client.test("注册成功", function() {
         client.assert(response.status === 200, "响应状态不是 200.");
     });
+%}
+
+### 用户登录, 方式: 用户名密码
+POST http://localhost:80/api/v1/login
+Content-Type: application/json
+
+{
+  "username": "{{username}}",
+  "password": "{{password}}",
+  "rememberMe": true,
+  "loginType": "USERNAME_PASSWORD"
+}
+
+> {%
+    client.test("用户登录(通过用户名密码)请求已成功执行", function() {
+        client.assert(response.status === 200, "响应状态不是 200.");
+
+        client.log(JSON.stringify(response.body, null, 2));
+        /*
+            JetBrains HTTP Client 的 client.global.set() 实际只支持字符串类型的全局变量, 不支持真正的 JavaScript 对象持久存储.
+
+            JetBrains HTTP Client 的变量存储机制:
+                - 所有通过 client.global.set(key, value) 存储的值, 最终会被序列化为字符串保存;
+                - 如果你传入一个对象, 它其实会变成字符串 "[object Object]" (这是 JS 默认的 Object.toString());
+                - 所以后续你用 get("user") 得到的其实是 "[object Object]"，不是原始对象, 当然访问不了 user["username"].
+
+            JetBrains 的 HTTP Client 变量机制只保证字符串值可以被跨请求使用. 对象/数组不是第一类支持的数据类型, 需要你显式序列化/反序列化.
+         */
+        client.global.set("user", JSON.stringify(response.body["data"]));
+    });
+
 %}
