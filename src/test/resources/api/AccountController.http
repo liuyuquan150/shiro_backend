@@ -1,0 +1,28 @@
+# 官方文档: https://www.jetbrains.com/help/idea/javascript-specific-guidelines.html
+
+### 用户(SYSTEM_ADMINISTRATOR 或 GUEST)注册
+
+< {%
+    import {generateUsername, generateChinesePhoneNumber} from "./utils";
+
+    /* 设置全局变量	整个 HTTP 文件、整个测试过程都能使用. */
+    client.global.set("username", generateUsername());
+    client.global.set("password", "12138");
+    client.global.set("phoneNumber", generateChinesePhoneNumber());
+%}
+
+POST {{baseUrl}}/api/v1/register
+Content-Type: application/json
+
+{
+  "username": "{{username}}",
+  "password": "{{password}}",
+  "phoneNumber" : "{{phoneNumber}}",
+  "role": "GUEST"
+}
+
+> {%
+    client.test("注册成功", function() {
+        client.assert(response.status === 200, "响应状态不是 200.");
+    });
+%}
