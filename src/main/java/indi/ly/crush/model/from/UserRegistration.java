@@ -1,5 +1,6 @@
 package indi.ly.crush.model.from;
 
+import indi.ly.crush.enums.Role;
 import indi.ly.crush.model.entity.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,13 +33,19 @@ public class UserRegistration
      * @see User#getPhoneNumber() User#phoneNumber
      */
     private String phoneNumber;
+    /**
+     * @see Role
+     * @see indi.ly.crush.model.entity.Role
+     */
+    private Role role;
 
     public UserRegistration() {
     }
 
-    public UserRegistration(String username, String password, String phoneNumber) {
+    public UserRegistration(String username, String password, String phoneNumber, Role role) {
         this.username = username;
         this.password = password;
         this.phoneNumber = phoneNumber;
+        this.role = role;
     }
 }

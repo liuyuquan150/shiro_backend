@@ -1,7 +1,6 @@
 package indi.ly.crush.service.impl;
 
 import indi.ly.crush.encryp.PasswordEncryption;
-import indi.ly.crush.enums.Role;
 import indi.ly.crush.ex.RegistrationFailedException;
 import indi.ly.crush.model.entity.User;
 import indi.ly.crush.model.from.UserCredentials;
@@ -121,8 +120,8 @@ public class IAccountServiceImpl
         user.setPhoneNumber(userRegistration.getPhoneNumber());
 
         this.transactionTemplate.execute(status -> {
-            long userId = this.userRepositoryImpl.saveAndFlush(user).getId();                                               // 添加用户.
-            this.roleRepositoryImpl.assignRoleToUser(userId, (long) Role.SYSTEM_ADMINISTRATOR.ordinal() + 1);               // 为用户分配角色.
+            long userId = this.userRepositoryImpl.saveAndFlush(user).getId();                                            // 添加用户.
+            this.roleRepositoryImpl.assignRoleToUser(userId, (long) userRegistration.getRole().ordinal() + 1);               // 为用户分配角色.
             return null;
         });
     }
